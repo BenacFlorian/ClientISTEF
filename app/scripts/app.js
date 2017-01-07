@@ -18,6 +18,7 @@ angular
     'ngSanitize',
     'ui.bootstrap',
     'ngTouch',
+    'nvd3',
     'ksSwiper',
     'ngAlertify'
   ])

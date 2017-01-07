@@ -12,6 +12,7 @@
                     // real data webservices
                     getProject: getProject,
                     getProjectFrontPage: getProjectFrontPage,
+                    getStatistique: getStatistique,
                     getCompteUser: getCompteUser,
                     getCategorieWithProject: getCategorieWithProject,
                     getCategorieProjectCount: getCategorieProjectCount,
@@ -51,6 +52,13 @@
 
                 function getProjectFrontPage() {
                     var request = $http.get(apiServer + '/api/Projets');
+                    return request.then(handleSuccess, handleError);
+                }
+
+                function getStatistique(userId) {
+                    var request = $http.post(apiServer + '/api/CompteProposeurs/getStatistiques', {
+                        userId: userId
+                    });
                     return request.then(handleSuccess, handleError);
                 }
 

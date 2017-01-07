@@ -32,7 +32,7 @@
                     </li>
                 </ul>
                 <div class="tab-content">
-                    <div class="tab-pane active" id="aPropos">
+                    <div class="tab-pane active" id="aPropos" style="margin-top:2%;">
                         <div class="row clearfix active">
                             <div class="col-md-6 column">
                                 <p>
@@ -95,7 +95,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane" id="projetsUser" style="margin-top:5%;" ng-if="showProject">
+                    <div class="tab-pane" id="projetsUser" style="margin-top:2%;" ng-if="showProject">
                         <h3 ng-show="projects.length == 0"> Aucun projet </h3>
                         <div class="row clearfix containerProjectCompte" ng-repeat="project in projects" ng-if="!project.estArchive">
                             <div class="row">
@@ -125,7 +125,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane" id="contributionUser" style="margin-top:5%" ng-if="showContribution">
+                    <div class="tab-pane" id="contributionUser" style="margin-top:2%" ng-if="showContribution">
                         <div class="row clearfix">
                             <div ng-show="contributions.length == 0">
                                 <h3>Aucune contribution à afficher</h3>
@@ -146,17 +146,39 @@
                             </table>
                         </div>
                     </div>
-                    <div class="tab-pane" id="statistic" style="margin-top:5%" ng-if="showProject">
-                        <div class="row clearfix">
-                            <div class="row">
-                                <table style="width:100%" class="table-responsive tableContribution" ng-show="contributions.length > 0">
-                                    <tr ng-repeat="stat in stats">
-                                        <th>Titre</th>
-                                        <td>{{contribution.projet.titre}}</td>
-                                        <td>{{contribution.somme}}€</td>
-                                        <td>{{formatDate(contribution.date)}}</td>
-                                    </tr>
+                    <div class="tab-pane" id="statistic" style="margin-top:3%" ng-if="showProject">
+                        <div class="row">
+                            <div class="divHeaderStats col-lg-6">
+                                <h3 class="headerStatTitle"> Nombre projet proposé :</h3>
+                                <h3 class="headerStatTitle" style="margin-left:2%;"> <b>{{stats.countProject}}</b> </h3>
+                            </div>
+                            <div class="divHeaderStats col-lg-6">
+                                <h3 class="headerStatTitle"> Contribution moyenne général :</h3>
+                                <h3 class="headerStatTitle" style="margin-left:2%;"><b>{{stats.averageGlobal}}</b> </h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 column">
+                                <h2 class="divHeaderStats"> Contribution moyenne par projet</h2>
+                                <table class="table tableInfo">
+                                    <tbody>
+                                        <tr ng-repeat="average in stats.tabAverage">
+                                            <td>
+                                                {{average.titre}}
+                                            </td>
+                                            <td class="bold">
+                                                {{average.average}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
                                 </table>
+                            </div>
+                            <div class="col-lg-6" ng-show="!hideChart">
+                                <h3 style="text-align:center">Part de réussite des projets archivés</h3>
+                                <nvd3 options="options" data="data"></nvd3>
+                            </div>
+                            <div class="col-lg-6" ng-show="hideChart">
+                                <h3> Pas assez de donnée disponible pour afficher le graphique de part de réussite des projets archivés</h3>
                             </div>
                         </div>
                     </div>

@@ -34,6 +34,7 @@
                         $scope.showEditing = false;
                     }
 
+                    initStatistique();
                     // init user compte part
                     DataService.getUser({
                             userId: userId,
@@ -84,6 +85,62 @@
 
                 // PRIVATE
                 // ----------------------------------------------------------------------------
+                function initStatistique() {
+
+                    DataService.getStatistique($stateParams.userId)
+                        .then(function (data) {
+                            $scope.stats = data.stats;
+
+                            if (data.stats.dataChart.completed == 0 && data.stats.dataChart.notCompleted == 0 && data.stats.dataChart.depassed == 0) {
+                                $scope.hideChart = true;
+                            } else {
+                                $scope.hideChart = false;
+                            }
+
+                            $scope.data = [
+                                {
+                                    key: "Somme atteinte",
+                                    y: parseInt(data.stats.dataChart.completed)
+                                },
+                                {
+                                    key: "Somme dépassé de au moins 50%",
+                                    y: parseInt(data.stats.dataChart.depassed)
+                                },
+                                {
+                                    key: "Somme non atteinte",
+                                    y: parseInt(data.stats.dataChart.notCompleted)
+                                }
+                            ];
+                        });
+
+                    $scope.options = {
+                        chart: {
+                            type: 'pieChart',
+                            height: 300,
+                            width: 500,
+                            x: function (d) {
+                                return d.key;
+                            },
+                            y: function (d) {
+                                return d.y;
+                            },
+                            showLabels: false,
+                            duration: 100,
+                            labelThreshold: 0.01,
+                            labelSunbeamLayout: true,
+                            legend: {
+                                updateState: false,
+                                margin: {
+                                    top: 10,
+                                    right: 0,
+                                    bottom: 0,
+                                    left: 0
+                                }
+                            }
+                        }
+                    };
+                }
+
                 function initTable() {
                     DataService.getContributionWithProjectsOfUser(UserService.getIdUser())
                         .then(function (data) {

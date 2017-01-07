@@ -13,6 +13,7 @@
       function ($scope, $state, DataService, SearchService) {
 
                 $scope.init = init;
+                $scope.goToProjectDetail = goToProjectDetail;
                 $scope.init();
 
                 // -------------------------------------------------
@@ -36,6 +37,11 @@
                 // PUBLIC
                 // ----------------------------------------------------------------------------
 
+                function goToProjectDetail(projectId) {
+                    $state.go('project', {
+                        projectId: projectId
+                    });
+                }
 
                 // PRIVATE
                 // ----------------------------------------------------------------------------
