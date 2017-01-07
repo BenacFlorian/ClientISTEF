@@ -1,0 +1,15 @@
+[
+    {
+        titre : "Course d'escargot", 
+        description : "Nous voulons organiser une course d'escargot",
+        urlPhotoPrincipal : "../images/courseEscargot.jpg",
+        dateCreation : "01/02/2015",
+        dateExpiration : "01/05/2016",
+        objectifFinancier : 2000,
+        sommeRecolte : 0,
+        estArchive : false,
+        estMisEnAvant : false,
+        dateExpirationMisEnAvant : "",
+        dateArchivé : ""        
+    }
+]

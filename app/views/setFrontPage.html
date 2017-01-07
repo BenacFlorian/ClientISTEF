@@ -1,0 +1,21 @@
+<div class="containerContribute">
+    <div class="col-lg-4" style="margin-left:23%;">
+        <a><img class="thumbnail imgContribute img-responsive" ng-src="{{project.urlPhotoPrincipal}}"></a>
+    </div>
+    <div class="row">
+        <div class="col-lg-8" style="margin-left:16%; text-align:center;">
+            <h1> {{project.titre}}</h1>
+        </div>
+        <div class="col-lg-6" style="margin-left:25%;">
+            <h2> Tarif : 10€ <span class="glyphicon glyphicon-arrow-right"></span> Une semaine </h2></div>
+        <div class="row" style="margin-top:10%;">
+            <div class="control-group">
+                <label class="control-label inlineBlock col-lg-4 labelContribute" for="name">A hauteur de combien voulez vous financer la mise en avant de votre projet ?</label>
+                <div class="controls inlineBlock col-lg-1">
+                    <input type="text" id="name" name="name" placeholder="" class="form-control inlineBlock inputContribute" ng-model="amount">
+                </div>
+                <button class="control-button btn btn-success inlineBlock col-lg-1" style="margin:0;" ng-click="setFrontPage()">Financer</button>
+            </div>
+        </div>
+    </div>
+</div>

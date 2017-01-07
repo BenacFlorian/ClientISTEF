@@ -1,0 +1,24 @@
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header"> <a class="navbar-brand" href="#">Occitanie Participative</a> </div>
+        <ul class="nav navbar-nav">
+            <li><a href="#!/addProject" ng-show="!isContributeur && isConnected"> Proposer un projet </a></li>
+            <li><a ng-click="search()"> Chercher un projet </a></li>
+            <li ng-show="showSearchInput">
+                <input id="searchInput" type="text" ng-model="searchValue" typeahead-editable="true" uib-typeahead="projet as projet.titre for projet in projets | filter:$viewValue | limitTo:8" class="form-control">
+            </li>
+            <li ng-show="showSearchInput" class="button btnHeader">
+                <div class="btn btn-success search" ng-click="searchResult()"> Chercher </div>
+            </li>
+            <li class="button btnHeader">
+                <div class="btn btn-warning search" ng-click="categories()"> Voir par catégorie </div>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right navBarHeader">
+            <li><a href="#!/compteUser/{{userId}}" ng-show="isConnected"><span class="glyphicon glyphicon-user"></span> {{username}} </a></li>
+            <li><a href="#!/inscription" ng-show="!isConnected"><span class="glyphicon glyphicon-pencil"></span> S'inscrire</a></li>
+            <li><a href="#!/login" ng-show="!isConnected"><span class="glyphicon glyphicon-log-in"></span> Se connecter</a></li>
+            <li><a href="#" ng-click="logout()" ng-show="isConnected"><span class="glyphicon glyphicon-log-out"></span> Se déconnecter</a></li>
+        </ul>
+    </div>
+</nav>

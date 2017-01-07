@@ -1,0 +1,65 @@
+<div class="containerContribute">
+    <div class="col-lg-6" style="margin-left:9%;">
+        <a><img class="thumbnail imgContribute img-responsive" ng-src="{{project.urlPhotoPrincipal}}"></a>
+    </div>
+    <div class="row">
+        <div class="col-lg-8" style="margin-left:16%; text-align:center;">
+            <h1> {{project.titre}}</h1>
+        </div>
+        <div class="col-lg-6" style="margin-left:25%;">
+            <h2>Nous vous remercions de votre intérèt pour ce projet</h2></div>
+        <div class="row" style="margin-top:10%;">
+            <div class="control-group">
+                <label class="control-label inlineBlock col-lg-4 labelContribute" for="name">A hauteur de combien voulez vous contribuer au projet ?</label>
+                <div class="controls inlineBlock col-lg-1">
+                    <input type="text" id="name" name="name" placeholder="" class="form-control inlineBlock inputContribute" ng-model="contributionValue">
+                </div>
+                <button class="control-button btn btn-success inlineBlock col-lg-1" style="margin:0;" ng-click="contribute()">Contribuer</button>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top:2%;">
+        <div class="panel panel-default col-lg-12">
+            <div class="panel-heading">
+                <h3 class="h3DescriptionContribute"> Contreparties </h3>
+            </div>
+            <div class="panel-body">
+                <div class="col-lg-12 awardContainer">
+                    <div class="row award">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><b>Pour 5€</b></div>
+                            <div class="panel-body">
+                                <ul>
+                                    <li> Un t-shirt </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row award">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><b>Pour 10€</b></div>
+                            <div class="panel-body">
+                                <ul>
+                                    <li> Un t-shirt </li>
+                                    <li> Un CD </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row award">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><b>Pour 25€</b></div>
+                            <div class="panel-body">
+                                <ul>
+                                    <li> Un t-shirt </li>
+                                    <li> Un CD </li>
+                                    <li> Un bisous </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

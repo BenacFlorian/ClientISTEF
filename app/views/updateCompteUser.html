@@ -1,0 +1,75 @@
+<div class="col-lg-10 containerRemember">
+    <form class="form-horizontal">
+        <fieldset style="margin-bottom:8%;">
+            <div id="legend">
+                <legend class="">Actualisez vos données</legend>
+            </div>
+            <div class="col-lg-6">
+                <div class="control-group">
+                    <label class="control-label" for="username">Nom d'utilisateur</label>
+                    <div class="controls">
+                        <input type="text" id="username" name="username" placeholder="" class="form-control" style="width: 40%;" ng-model="user.username">
+                        <p class="help-block">Le nom d'utilisateur ne doit contenir que des chiffres et des lettres, sans espaces</p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <!-- Password-->
+                    <label class="control-label" for="password">Mot de passe</label>
+                    <div class="controls">
+                        <input type="password" id="password" name="password" placeholder="" class="form-control" style="width: 40%;" ng-model="user.password">
+                        <p class="help-block" style="margin-top: 2%">Le mot de passe doit avoir au moins 6 caractères</p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <!-- Password -->
+                    <label class="control-label" for="password_confirm" style="margin-top:1%; margin-bottom:1%">Mot de passe (Confirmation)</label>
+                    <div class="controls">
+                        <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="form-control" style="width: 40%;" ng-model="user.passwordConfirm">
+                        <p class="help-block" style="margin-top: 2%">Confirmer mot de passe s'il vous plait</p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="address">Adresse</label>
+                    <div class="controls">
+                        <input type="text" id="address" name="firstnaddressame" placeholder="" class="form-control" style="width: 40%;" ng-model="user.adresse">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="control-group">
+                    <label class="control-label" for="zipCode">Code postal</label>
+                    <div class="controls">
+                        <input type="text" id="zipCode" name="zipCode" placeholder="" class="form-control" style="width: 40%;" ng-model="user.codePostal">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="city">Ville</label>
+                    <div class="controls">
+                        <input type="text" id="city" name="city" placeholder="" class="form-control" style="width: 40%;" ng-model="user.ville">
+                    </div>
+                </div>
+                <div class="control-group" style="margin-bottom:5%; margin-top:2%;">
+                    <label class="control-label" for="description">Description</label>
+                    <textarea class="inlineBlock inputAddProject form-control" style="width:100%; resize:vertical; height:30%;" type="text" ng-model="user.description"></textarea>
+                </div>
+                <div class="control-group">
+                    <div class="col-lg-4">
+                        <img class="img-thumbnail" alt="140x140" ng-src="{{user.avatarUrl}}" />
+                    </div>
+                    <div class="divAddPicture col-lg-8">
+                        <label class="control-label" for="description">Avatar </label>
+                        <input type="file" id="pictureAddedProject" file-model="file">
+                        <p class="help-block">Merci de charger des fichiers jpg ou png de 400Ko max</p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <!-- Button -->
+                    <div class="controls">
+                        <button class="btn btn-success col-lg-3" style="margin-top: 12%; margin-right:5px;" ng-click="updateCompteUser()"> Enregistrer </button>
+                        <button class="btn btn-danger col-lg-4" style="margin-top: 12%;" ng-click="deleteCompteUser()"> Supprimer le compte</button>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>

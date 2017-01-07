@@ -1,0 +1,167 @@
+<div class="container containerProjectCompte">
+    <div class="row clearfix well" style="margin-top:2%;">
+        <div class="col-md-2 column">
+            <img class="img-thumbnail" alt="140x140" ng-src="{{user.avatarUrl}}" />
+        </div>
+        <div class="col-md-8 column">
+            <blockquote>
+                <p>
+                    {{user.nom}} {{user.prenom}}
+                </p> <small><age ng-show="user.dateNaissance">{{formatAge(user.dateNaissance)}} ans </age><cite>Toulouse</cite></small>
+            </blockquote>
+        </div>
+        <div class="col-md-2 column" ng-show="showEditing">
+            <span class="glyphicon glyphicon-pencil pull-right" ng-click="goToUpdateCompteUser()"></span>
+        </div>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="tabbable" id="tabs-444468">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="compteUser#aPropos" data-toggle="tab">A propos...</a>
+                    </li>
+                    <li ng-show="showProject">
+                        <a href="compteUser#projetsUser" data-toggle="tab">Projets</a>
+                    </li>
+                    <li ng-show="showProject">
+                        <a href="compteUser#statistic" data-toggle="tab">Statistiques</a>
+                    </li>
+                    <li ng-show="showContribution">
+                        <a href="compteUser#contributionUser" data-toggle="tab">Contribution</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="aPropos">
+                        <div class="row clearfix active">
+                            <div class="col-md-6 column">
+                                <p>
+                                    <br/> {{user.description}}
+                                </p>
+                            </div>
+                            <div class="col-md-6 column">
+                                <table class="table tableInfo">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                Nom
+                                            </td>
+                                            <td class="bold">
+                                                {{user.nom}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Prénom
+                                            </td>
+                                            <td>
+                                                {{user.prenom}}
+                                            </td>
+                                        </tr>
+                                        <tr ng-show="user.dateNaissance">
+                                            <td>
+                                                Age
+                                            </td>
+                                            <td>
+                                                {{formatAge(user.dateNaissance)}} ans
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Ville
+                                            </td>
+                                            <td>
+                                                {{user.ville}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Code postal
+                                            </td>
+                                            <td>
+                                                {{user.codePostal}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Date création
+                                            </td>
+                                            <td>
+                                                {{user.created}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="projetsUser" style="margin-top:5%;" ng-if="showProject">
+                        <h3 ng-show="projects.length == 0"> Aucun projet </h3>
+                        <div class="row clearfix containerProjectCompte" ng-repeat="project in projects" ng-if="!project.estArchive">
+                            <div class="row">
+                                <div class="col-lg-3 column imgProjectCompte" style='height: 25%;'>
+                                    <img class="img-thumbnail" alt="140x140" ng-src="{{project.urlPhotoPrincipal}}" style="display:block" />
+                                </div>
+                                <div class="col-md-9 column">
+                                    <div class="row">
+                                        <h2 style="margin-top:0;">{{project.titre}}</h2></div>
+                                    <div class="row">
+                                        <p class="descriptionProjetCompte">
+                                            {{project.description}}
+                                        </p>
+                                        <div class="panel-body">
+                                            <div class="col-lg-3 summaryElement">
+                                                <h3>Récoltés : </h3>
+                                                <h3 class="summaryElementH3"><b>{{project.sommeRecoltee}}€</b></h3>
+                                            </div>
+                                            <div class="col-lg-4 summaryElement">
+                                                <h3>Objectifs : </h3>
+                                                <h3 class="summaryElementH3"><b>{{project.objectifFinancier}}€</b></h3>
+                                            </div>
+                                            <button class="pull-right btn btn-success" ng-click="goToProject(project.id)">Voir </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="contributionUser" style="margin-top:5%" ng-if="showContribution">
+                        <div class="row clearfix">
+                            <div ng-show="contributions.length == 0">
+                                <h3>Aucune contribution à afficher</h3>
+                            </div>
+                            <table style="width:100%" class="table-responsive tableContribution" ng-show="contributions.length > 0">
+                                <tr>
+                                    <th></th>
+                                    <th>Titre</th>
+                                    <th>Montant</th>
+                                    <th>Date</th>
+                                </tr>
+                                <tr ng-repeat="contribution in contributions">
+                                    <td class="col-lg-1"><img class="thumbnail img-responsive" ng-src="{{contribution.projet.urlPhotoPrincipal}}" style="margin-bottom:0;"></td>
+                                    <td>{{contribution.projet.titre}}</td>
+                                    <td>{{contribution.somme}}€</td>
+                                    <td>{{formatDate(contribution.date)}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="statistic" style="margin-top:5%" ng-if="showProject">
+                        <div class="row clearfix">
+                            <div class="row">
+                                <table style="width:100%" class="table-responsive tableContribution" ng-show="contributions.length > 0">
+                                    <tr ng-repeat="stat in stats">
+                                        <th>Titre</th>
+                                        <td>{{contribution.projet.titre}}</td>
+                                        <td>{{contribution.somme}}€</td>
+                                        <td>{{formatDate(contribution.date)}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

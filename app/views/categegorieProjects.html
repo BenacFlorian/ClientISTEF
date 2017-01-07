@@ -1,0 +1,42 @@
+<div id="containerSearchResult">
+    <br/>
+    <div class="panel panel-default containerSearchProject">
+        <div class="panel-heading">
+            <p style="margin-left: 1%;"> {{projectCount}} résultats trouvés pour la categorie "{{categorie.label}}" </p>
+        </div>
+        <div class="panel-body">
+            <div class="projectSearchProject" ng-repeat="project in projects">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2>{{project.titre}}</h2></div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <p class="descriptionProjectSearch">{{project.description}}</p>
+                                <div class="row author"> Autheur : <a ng-click="goToCompteProposeur(project.compteProposeur.id)">{{project.compteProposeur.nom}} {{project.compteProposeur.prenom}} </a> </div>
+                                <div class="row">
+                                    <div class="panel panel-default" style="margin-left:2.5%;margin-top:3%;">
+                                        <div class="panel-body">
+                                            <div class="col-lg-5">
+                                                <h3 class="inlineBlock col-lg-6 labelSearchResult">Objectifs : </h3> <b class="inlineBlock col-lg-4 summarySearch labelSearchResult"> {{project.objectifFinancier}}€ </b></div>
+                                            <div class="col-lg-5">
+                                                <h3 class="inlineBlock col-lg-6 labelSearchResult">Récoltés : </h3> <b class="inlineBlock col-lg-4 summarySearch labelSearchResult"> {{project.sommeRecoltee}}€ </b></div>
+                                            <div class="col-lg-2">
+                                                <div style="margin-top: 2%;" class="btn btn-success pull-right" ng-click="goToProject(project.id)"> Voir plus </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="col-lg-12 col-sm-12 col-xs-12">
+                                    <a title="Image 1" href="#"><img class="thumbnail img-responsive" ng-src="{{project.urlPhotoPrincipal}}" style="margin-bottom:0;"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
