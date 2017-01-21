@@ -146,6 +146,7 @@
                                 $state.go('home');
                             })
                             .catch(function (err) {
+                                alertify.error("Il y eu un problème lors de la création de votre projet, veuillez réessayer plus tard")
                                 console.log('[ERROR]: ', err);
                             })
                     } else {

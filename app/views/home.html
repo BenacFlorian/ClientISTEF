@@ -8,13 +8,13 @@
                             <div class="panel-heading">
                                 <h1> {{projet.titre}}</h1>
                             </div>
-                            <div class="panel-body">
+                            <div id="descriptionSlider" class="panel-body">
                                 <p>{{projet.description}}</p>
                             </div>
 
                             <div class="row">
-                                <h3> Objectif : {{projet.objectifFinancier}}€</h3>
-                                <h3> Récoltés : {{projet.sommeRecoltee}}€</h3>
+                                <h3 ng-show="!projet.isAboutUs"> Objectif : {{projet.objectifFinancier}}€</h3>
+                                <h3 ng-show="!projet.isAboutUs"> Récoltés : {{projet.sommeRecoltee}}€</h3>
                                 <button href="" ng-click="goToProjectDetail(projet.id)" class="pull-right btn btn-info">En savoir plus ... </button>
                             </div>
                         </div>

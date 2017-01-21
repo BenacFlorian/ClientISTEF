@@ -1,0 +1,6 @@
+{
+    "jscodehints.detectedExclusions": [
+        "/home/florian-benac/Documents/ISTEF/Client/bower_components/bootstrap/js/popover.js",
+        "/home/florian-benac/Documents/ISTEF/Client/bower_components/nvd3/build/nv.d3.min.js"
+    ]
+}

@@ -21,8 +21,16 @@
 
                 $scope.changeImageSelected = changeImageSelected;
                 $scope.deleteProject = deleteProject;
+          
+                $scope.defineCategorie = defineCategorie;
+                $scope.categorieChange = categorieChange;
 
                 $scope.init();
+          
+                $scope.dataCategorie = {
+                    selectedCategorie : {}, 
+                    tabOfCategorie: []
+                }
 
                 // -------------------------------------------------
 
@@ -30,16 +38,24 @@
                     var projectId = $stateParams.projectId;
 
                     $scope.typeUser = UserService.getTypeUser();
+                    
+                    $scope.definingCategorie = false;
+                    $scope.notDefiningCategorie = true;
+                    
                     DataService.getProject(projectId)
                         .then(function (project) {
-                            if (project.compteProposeurId == UserService.getIdUser()) {
-                                $scope.isOwnProject = true;
-                            } else {
-                                $scope.isOwnProject = false;
+                            if($scope.typeUser != "Admin"){
+                                if (project.compteProposeurId == UserService.getIdUser()) {
+                                    $scope.isOwnProject = true;
+                                } else {
+                                    $scope.isOwnProject = false;
+                                }
+                            }else{
+                                $scope.isOwnProject = false;                                
                             }
                             $scope.proposeur = project.compteProposeur;
                             $scope.contreparties = project.contreparties;
-
+                
                             // si le projet a une date d'expiration et qu'elle est dans le futur
                             if (project.dateExpirationMisEnAvant && moment(project.dateExpirationMisEnAvant).isAfter(moment(new Date()))) {
                                 $scope.showDateExpirationFrontPage = true;
@@ -65,11 +81,19 @@
                 function deleteProject(projectId) {
                     DataService.archiveProject(projectId)
                         .then(function () {
-                            alertify.success("Le projet a été supprimé");
+                            if(UserService.getTypeUser() == "Admin"){
+                                alertify.success("Le projet a été archivé");
+                            }else{
+                                alertify.success("Le projet a été supprimé");
+                            }
                             $state.go('home');
                         })
                         .catch(function (err) {
-                            alertify.error("Erreur durant la suppresion du projet");
+                            if(UserService.getTypeUser() == "Admin"){
+                                alertify.error("Erreur durant l'arcvhivage du projet");
+                            }else{
+                                alertify.error("Erreur durant la suppresion du projet");
+                            }
                         })
                 }
 
@@ -103,6 +127,37 @@
 
                 function changeImageSelected(urlImg) {
                     $scope.dataImg.imageSelected = urlImg;
+                }
+          
+                function defineCategorie(){
+                    $scope.definingCategorie = true;
+                    $scope.notDefiningCategorie = false;
+                    DataService.getCategories()
+                        .then(function(categories){
+                            $scope.dataCategorie.tabOfCategorie = categories;
+                            $scope.dataCategorie.selectedCategorie = _.find(categories, function(categorie){
+                                return categorie.id == $scope.project.categorieId;
+                            });
+                        })
+                }
+          
+                function categorieChange(){
+                    $scope.definingCategorie = false;
+                    var categorie = $scope.dataCategorie.selectedCategorie;
+                    DataService.updateCategorie($scope.project.id,categorie)
+                        .then(function(data){
+                            var newCategorie = _.find( $scope.dataCategorie.tabOfCategorie, function(categorie){
+                                return categorie.id == data.categorieId;
+                            });
+                            $scope.project.categorieId = newCategorie.id; 
+                            alertify.success("La catégorie a été modifié");
+                            $scope.project.categorie = newCategorie;
+                            $scope.notDefiningCategorie = true;
+                        })
+                        .catch(function(err){
+                            alertify.error("Problème lors de la modification de la catégorie"); 
+                            console.log(err);
+                        });
                 }
 
                 // PRIVATE

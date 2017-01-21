@@ -8,7 +8,15 @@
                         <p class="dateExpirationFrontPageLabel">Date fin de mise en avant : </p>
                         <p class="dateExpirationFrontPageLabel"><b>{{project.dateExpirationMisEnAvant}}</b></p>
                     </div>
-                    <button class="inlineBlock btn btn-warning pull-right" id="btnCategorieLabel" ng-click="goToCategorie(project.categorie.id)">{{project.categorie.label}}</button>
+                    
+                    
+                    <select class="input form-control" name="selectCategorie" id="selectCategorie" ng-change="categorieChange()" ng-options="categorie.label for categorie in dataCategorie.tabOfCategorie" ng-model="dataCategorie.selectedCategorie" ng-show="definingCategorie">
+                        <option value=''></option>
+                    </select>
+                    <button class="inlineBlock btn btn-warning pull-right" id="btnCategorieLabel" ng-click="goToCategorie(project.categorie.id)" ng-show="notDefiningCategorie">{{project.categorie.label}}</button>
+                    
+                    <button class="inlineBlock btn btn-info pull-right" id="btnCategorieLabel" ng-click="defineCategorie()" ng-show="typeUser == 'Admin' && notDefiningCategorie" >Définir catégorie</button>
+                    
                 </div>
                 <div class="panel-body">
                     <div class="row summaryContainer">
@@ -26,7 +34,8 @@
                                                 <h3 class="summaryElementH3"><b>{{project.objectifFinancier}}€</b></h3>
                                             </div>
                                             <div class="col-lg-6 ">
-                                                <div class="btn btn-danger pull-right" ng-show="isOwnProject && typeUser !='Contributeur'" ng-click="deleteProject(project.id)"> Supprimer projet </div>
+                                                <div class="btn btn-danger pull-right" ng-show="typeUser == 'Admin'" ng-click="deleteProject(project.id)"> Archiver projet </div>
+                                                <div class="btn btn-danger pull-right" ng-show="typeUser != 'Admin' && isOwnProject && typeUser !='Contributeur'" ng-click="deleteProject(project.id)"> Supprimer projet </div>
                                                 <div class="btn btn-success pull-right" ng-show="isOwnProject && typeUser !='Contributeur'" ng-click="goToUpdateProject()"> Modifier </div>
                                                 <div class="btn btn-info pull-right" ng-show="isOwnProject && typeUser !='Contributeur'" ng-click="goToSetFrontPage()"> Financer mise en avant </div>
                                                 <div class="btn btn-success pull-right" ng-show="typeUser=='Contributeur'" ng-click="goToContribute()"> Contribuer </div>
@@ -64,7 +73,7 @@
                                     </div>
                                     <div class="col-lg-8 col-sm-8 col-xs-8">
                                         <p>Porteur du projet :</p>
-                                        <h2> {{proposeur.nom}} {{proposeur.prenom}}</h2>
+                                        <h2><a ng-href="#!/compteUser/Proposeur/{{proposeur.id}}"> {{proposeur.nom}} {{proposeur.prenom}}</a></h2>
                                     </div>
                                 </div>
                                 <div class="row descriptionProjectFounder">
@@ -100,7 +109,8 @@
                                                 <h3 class="summaryElementH3"><b>{{project.objectifFinancier}}€</b></h3>
                                             </div>
                                             <div class="col-lg-6">
-                                                <div class="btn btn-danger pull-right" ng-show="isOwnProject && typeUser !='Contributeur'" ng-click="deleteProject(project.id)"> Supprimer projet </div>
+                                                <div class="btn btn-danger pull-right" ng-show="typeUser == 'Admin'" ng-click="deleteProject(project.id)"> Archiver projet </div>
+                                                <div class="btn btn-danger pull-right" ng-show="typeUser != 'Admin' && isOwnProject && typeUser !='Contributeur'" ng-click="deleteProject(project.id)"> Supprimer projet </div>
                                                 <div class="btn btn-success pull-right" ng-show="isOwnProject && typeUser !='Contributeur'" ng-click="goToUpdateProject()"> Modifier </div>
                                                 <div class="btn btn-info pull-right" ng-show="isOwnProject && typeUser !='Contributeur'" ng-click="goToSetFrontPage()"> Financer mise en avant </div>
                                                 <div class="btn btn-success pull-right" ng-show="typeUser=='Contributeur'" ng-click="goToContribute()"> Contribuer </div>

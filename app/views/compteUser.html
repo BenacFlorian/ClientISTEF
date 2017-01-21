@@ -13,6 +13,10 @@
         <div class="col-md-2 column" ng-show="showEditing">
             <span class="glyphicon glyphicon-pencil pull-right" ng-click="goToUpdateCompteUser()"></span>
         </div>
+        <div class="col-md-2 column" ng-show="typeUser == 'Admin' && !dontShowButtonDeleteUser">
+            <div class="btn btn-danger pull-right" ng-click="deleteUser()">
+            <span class="glyphicon glyphicon-trash pull-right" style="margin-left:5px;margin-top:2px;"></span> Supprimer compte </div>
+        </div>
     </div>
     <div class="row clearfix">
         <div class="col-md-12 column">
@@ -24,11 +28,17 @@
                     <li ng-show="showProject">
                         <a href="compteUser#projetsUser" data-toggle="tab">Projets</a>
                     </li>
-                    <li ng-show="showProject">
+                    <li ng-show="showProject && isOwnCompte">
                         <a href="compteUser#statistic" data-toggle="tab">Statistiques</a>
                     </li>
                     <li ng-show="showContribution">
                         <a href="compteUser#contributionUser" data-toggle="tab">Contribution</a>
+                    </li>
+                    <li ng-show="isAdmin">
+                        <a href="compteUser#historique" data-toggle="tab">Historique</a>
+                    </li>
+                    <li ng-show="isAdmin">
+                        <a href="compteUser#users" data-toggle="tab">Utilisateurs</a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -146,7 +156,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="tab-pane" id="statistic" style="margin-top:3%" ng-if="showProject">
+                    <div class="tab-pane" id="statistic" style="margin-top:3%" ng-if="showProject && isOwnCompte">
                         <div class="row">
                             <div class="divHeaderStats col-lg-6">
                                 <h3 class="headerStatTitle"> Nombre projet proposé :</h3>
@@ -180,6 +190,50 @@
                             <div class="col-lg-6" ng-show="hideChart">
                                 <h3> Pas assez de donnée disponible pour afficher le graphique de part de réussite des projets archivés</h3>
                             </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="historique" style="margin-top:3%" ng-if="isAdmin">
+                        <div class="row clearfix">
+                            <div ng-show="contributions.length == 0">
+                                <h3>Aucun historique à afficher</h3>
+                            </div>
+                            <table style="width:100%" class="table-responsive tableContribution" ng-show="projets.length > 0">
+                                <tr>
+                                    <th></th>
+                                    <th>Titre</th>
+                                    <th>Somme récoltée</th>
+                                    <th>Date archivage</th>
+                                </tr>
+                                <tr ng-repeat="projet in projets">
+                                    <td class="col-lg-1"><img class="thumbnail img-responsive" ng-src="{{projet.urlPhotoPrincipal}}" style="margin-bottom:0;"></td>
+                                    <td><a ng-href="#!/project/{{projet.id}}">{{projet.titre}}</a></td>
+                                    <td>{{projet.sommeRecoltee}}€</td>
+                                    <td>{{formatDate(projet.dateArchivage)}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="users" style="margin-top:3%" ng-if="isAdmin">
+                        <div class="row clearfix">
+                            <div ng-show="contributions.length == 0">
+                                <h3>Aucun utilisateur à afficher</h3>
+                            </div>
+                            <table style="width:100%" class="table-responsive tableContribution" ng-show="users.length > 0">
+                                <tr>
+                                    <th></th>
+                                    <th>Nom</th>
+                                    <th>Type compte</th>
+                                    <th>Date creation</th>
+                                </tr>
+                                <tr ng-repeat="user in users">
+                                    <td class="col-lg-1"><img class="thumbnail img-responsive" ng-src="{{user.avatarUrl}}" style="margin-bottom:0;"></td>
+                                    <td ng-if="user.proposeur"><a ng-href="#!/compteUser/Proposeur/{{user.id}}">{{user.nom}} {{user.prenom}}</a></td>
+                                    <td ng-if="!user.proposeur"><a ng-href="#!/compteUser/Contributeur/{{user.id}}">{{user.nom}} {{user.prenom}}</a></td>
+                                    <td ng-if="user.proposeur">Proposeur</td>
+                                    <td ng-if="!user.proposeur">Contributeur</td>
+                                    <td>{{formatDate(user.created)}}</td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </div>

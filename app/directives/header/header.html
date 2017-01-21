@@ -1,24 +1,36 @@
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
-        <div class="navbar-header"> <a class="navbar-brand" href="#">Occitanie Participative</a> </div>
-        <ul class="nav navbar-nav">
-            <li><a href="#!/addProject" ng-show="!isContributeur && isConnected"> Proposer un projet </a></li>
-            <li><a ng-click="search()"> Chercher un projet </a></li>
-            <li ng-show="showSearchInput">
-                <input id="searchInput" type="text" ng-model="searchValue" typeahead-editable="true" uib-typeahead="projet as projet.titre for projet in projets | filter:$viewValue | limitTo:8" class="form-control">
-            </li>
-            <li ng-show="showSearchInput" class="button btnHeader">
-                <div class="btn btn-success search" ng-click="searchResult()"> Chercher </div>
-            </li>
-            <li class="button btnHeader">
-                <div class="btn btn-warning search" ng-click="categories()"> Voir par catégorie </div>
-            </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right navBarHeader">
-            <li><a href="#!/compteUser/{{userId}}" ng-show="isConnected"><span class="glyphicon glyphicon-user"></span> {{username}} </a></li>
-            <li><a href="#!/inscription" ng-show="!isConnected"><span class="glyphicon glyphicon-pencil"></span> S'inscrire</a></li>
-            <li><a href="#!/login" ng-show="!isConnected"><span class="glyphicon glyphicon-log-in"></span> Se connecter</a></li>
-            <li><a href="#" ng-click="logout()" ng-show="isConnected"><span class="glyphicon glyphicon-log-out"></span> Se déconnecter</a></li>
-        </ul>
-    </div>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Projet d'Oc</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="#!/addProject" ng-show="isProposeur && isConnected">Proposer un projet </a></li>
+                <li><a id="searchButton" ng-click="search()">
+                    <span class="menuIconButtonHeader glyphicon glyphicon-search"></span>Chercher un projet</a>    
+                </li>
+                <li id="searchInput" ng-show="showSearchInput">
+                    <input  id="inputHeader" type="text" ng-model="searchValue" typeahead-editable="true" uib-typeahead="projet as projet.titre for projet in projets | filter:$viewValue | limitTo:8">
+                    <div class="btn btn-success" ng-click="searchResult()">
+                        <span class="menuIconButtonHeader glyphicon glyphicon-ok"></span>
+                        <span class="menuButtonHeader">Chercher</span>
+                    </div>
+                </li>
+                <li style="margin-left: 20px;">
+                    <div class="categorieHeader search" ng-click="categories()"><span class="menuIconButtonHeader glyphicon glyphicon-th"></span><span class="menuButtonHeader"> Catégorie</span>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#!/compteUser/{{typeUser}}/{{userId}}" ng-show="isConnected"><span class="menuIcon glyphicon glyphicon-user"></span> {{username}} </a></li>
+                <li><a href="#!/inscription" ng-show="!isConnected"><span class="menuIconButtonHeader glyphicon glyphicon-pencil"></span><span class="menuExtend"> S'inscrire</span></a></li>
+                <li><a href="#!/login" ng-show="!isConnected"><span class="menuIconButtonHeader glyphicon glyphicon-log-in"></span><span class="menuExtend"> Se connecter</span></a></li>
+                <li><a href="#" ng-click="logout()" ng-show="isConnected"><span class="menuIcon glyphicon glyphicon-log-out"></span> <span class="menuExtend">Se déconnecter</span></a></li>
+            </ul>
+            </div>
+        </div>
 </nav>

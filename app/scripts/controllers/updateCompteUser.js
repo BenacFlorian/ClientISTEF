@@ -43,18 +43,42 @@
                     if (UserService.getTypeUser() == "Contributeur") {
                         DataService.updateCompteContributeur($scope.user)
                             .then(function (compteUser) {
-                                loadAvatar(UserService.getTypeUser())
-                                    .then(function () {
-                                        alertify.success("Vos données ont bien été mis à jour");
-                                    });
+                                if($scope.file){
+                                    loadAvatar(UserService.getTypeUser())
+                                        .then(function () {
+                                            alertify.success("Vos données ont bien été mis à jour");
+                                        })
+                                        .catch(function(err){
+                                            alertify.error('Il y a eu une erreur lors de la modification de votre avatar.'); 
+                                            console.log(err);
+                                        });
+                                }else{
+                                    alertify.success("Vos données ont bien été mis à jour");
+                                }
+                            })
+                            .catch(function(err){
+                                alertify.error('Il y a eu une erreur lors de la modification de votre compte.'); 
+                                console.log(err);
                             });
                     } else {
                         DataService.updateCompteProposeur($scope.user)
                             .then(function (compteUser) {
-                                loadAvatar(UserService.getTypeUser())
-                                    .then(function () {
-                                        alertify.success("Vos données ont bien été mis à jour");
-                                    });
+                                if($scope.file){
+                                    loadAvatar(UserService.getTypeUser())
+                                        .then(function () {
+                                            alertify.success("Vos données ont bien été mis à jour");
+                                        })
+                                        .catch(function(err){
+                                            alertify.error('Il y a eu une erreur lors de la modification de votre avatar.'); 
+                                            console.log(err);
+                                        });
+                                }else{
+                                    alertify.success("Vos données ont bien été mis à jour");
+                                }
+                            })
+                            .catch(function(err){
+                                alertify.error('Il y a eu une erreur lors de la modification de votre compte.'); 
+                                console.log(err);
                             });
                     }
                 }

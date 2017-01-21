@@ -86,7 +86,7 @@ angular
                     controller: 'CategoriesCtrl'
                 })
                 .state('compteUser', {
-                    url: '/compteUser/{userId}',
+                    url: '/compteUser/{typeUser}/{userId}',
                     templateUrl: 'views/compteUser.html',
                     controller: 'CompteUserCtrl'
                 })
@@ -103,6 +103,9 @@ angular
 
                     if (TokenService.getToken() && $rootScope.actualizeHeader) {
                         $rootScope.actualizeHeader();
+                    }
+                    if(!TokenService.getToken() && $rootScope.isConnected){
+                        $rootScope.actualizeHeader();                        
                     }
 
                 })

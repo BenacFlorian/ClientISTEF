@@ -12,59 +12,10 @@
                     replace: true,
                     link: function (scope, element, attrs) {
 
-                        scope.showSearchInput = false;
-
-                        // init menu 
-                        var userId = UserService.getIdUser(),
-                            typeUser = UserService.getTypeUser();
-
-                        if (typeUser == "Contributeur") {
-                            scope.isContributeur = true;
-                        } else {
-                            scope.isContributeur = false;
-                        }
-
-                        if (userId) {
-                            DataService.getUser({
-                                    userId: userId,
-                                    typeUser: typeUser
-                                })
-                                .then(function (data) {
-                                    scope.username = data.user.username;
-                                    if (scope.username) {
-                                        scope.isConnected = true;
-                                    } else {
-                                        scope.isConnected = false;
-                                    }
-                                });
-                        }
-
-                        DataService.getProjectTyephead()
-                            .then(function (data) {
-                                scope.projets = data;
-                            });
-
+                        initHeader();
+                        
                         scope.actualizeHeader = function () {
-                            var userId = UserService.getIdUser(),
-                                typeUser = UserService.getTypeUser();
-
-                            if (userId) {
-                                DataService.getUser({
-                                        userId: userId,
-                                        typeUser: typeUser
-                                    })
-                                    .then(function (data) {
-                                        scope.username = data.user.username;
-                                        scope.userId = data.user.id;
-                                        if (scope.username) {
-                                            scope.isConnected = true;
-                                        } else {
-                                            scope.isConnected = false;
-                                        }
-                                    });
-                            } else {
-                                scope.isConnected = false;
-                            }
+                            initHeader();
                         }
 
                         scope.searchResult = function () {
@@ -92,6 +43,7 @@
                                 .then(function () {
                                     scope.actualizeHeader();
                                     TokenService.removeToken();
+                                    $state.go($state.current, {}, {reload: true});
                                     alertify.success('Au revoir');
                                 })
                         }
@@ -99,9 +51,50 @@
                         scope.search = function () {
                             scope.showSearchInput = !scope.showSearchInput;
                         }
-                    }
-                };
+                        
+                        function initHeader(){
+                            scope.showSearchInput = false;
 
-                    }]);
+                            // init menu 
+                            var userId = UserService.getIdUser(),
+                                typeUser = UserService.getTypeUser();
+                            scope.typeUser = typeUser;
+                            scope.userId = userId;
+                            if (typeUser == "Proposeur") {
+                                scope.isProposeur = true;
+                            } else {
+                                scope.isProposeur = false;
+                            }
+
+                            if (userId) {
+                                DataService.getUser({
+                                        userId: userId,
+                                        typeUser: typeUser
+                                    })
+                                    .then(function (data) {
+                                        scope.username = data.user.username;
+                                        if (scope.username) {
+                                            scope.isConnected = true;
+                                        } else {
+                                            scope.isConnected = false;
+                                        }
+                                    });
+                            } else {
+                                scope.isConnected = false;
+                            }
+
+                            DataService.getProjectTypehead()
+                                .then(function (data) {
+                                    var dateNow = new Date();
+                                    scope.projets = _.filter(data, function (project) {
+                                        var dateExpiration = moment(new Date(project.dateExpiration));
+                                        return dateExpiration.isAfter(dateNow) && !project.estArchive;
+                                    });
+                                });
+                        }
+                    }
+            }
+
+    }]);
 
 }());

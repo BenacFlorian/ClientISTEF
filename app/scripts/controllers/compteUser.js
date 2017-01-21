@@ -9,13 +9,14 @@
     'use strict';
 
     angular.module('clientApp')
-        .controller('CompteUserCtrl', ['$scope', '$state', '$stateParams', 'DataService', 'UserService', 'TokenService',
-      function ($scope, $state, $stateParams, DataService, UserService, TokenService) {
+        .controller('CompteUserCtrl', ['$scope', '$state', '$stateParams', 'DataService', 'UserService', 'TokenService', 'alertify',
+      function ($scope, $state, $stateParams, DataService, UserService, TokenService, alertify) {
 
                 $scope.init = init;
                 $scope.goToProject = goToProject;
                 $scope.formatAge = formatAge;
                 $scope.formatDate = formatDate;
+                $scope.deleteUser = deleteUser;
                 $scope.goToUpdateCompteUser = goToUpdateCompteUser;
 
                 $scope.init();
@@ -24,21 +25,32 @@
 
                 function init() {
                     var userId = $stateParams.userId,
-                        typeUser = UserService.getTypeUser();
+                        typeUser = $stateParams.typeUser;
                     moment().locale('fr');
+                    $scope.typeUser == UserService.getTypeUser()
 
-
-                    if (userId == UserService.getIdUser()) {
+                    if (userId == UserService.getIdUser() && typeUser == UserService.getTypeUser() && typeUser != "Admin") {
                         $scope.showEditing = true;
                     } else {
                         $scope.showEditing = false;
                     }
-
-                    initStatistique();
+                    
+                    if (userId == UserService.getIdUser() && typeUser == UserService.getTypeUser() && typeUser == "Admin"){
+                        $scope.dontShowButtonDeleteUser = true;
+                    }else{
+                        $scope.dontShowButtonDeleteUser = false;
+                    }
+                    
+                    if(userId == UserService.getIdUser() && typeUser == UserService.getTypeUser()){
+                        $scope.isOwnCompte = true;
+                    }else{
+                        $scope.isOwnCompte = false;
+                    }
+                    
                     // init user compte part
                     DataService.getUser({
                             userId: userId,
-                            typeUser: UserService.getTypeUser()
+                            typeUser: typeUser
                         })
                         .then(function (data) {
                             data.user.created = moment(data.user.created).format('DD MMM YYYY');
@@ -46,6 +58,10 @@
                         });
 
                     if (typeUser == "Proposeur") {
+                        
+                        if($scope.isOwnCompte){
+                            initStatistique();
+                        }
                         // init user project part 
                         DataService.getProjectOfUser(userId)
                             .then(function (projects) {
@@ -61,12 +77,34 @@
                         initTable();
                         $scope.showProject = false;
                         $scope.showContribution = true;
+                    }                    
+
+                    if(typeUser == "Admin"){
+                        initAdminPart();
+                        $scope.isAdmin = true;
+                        $scope.showContribution = false;
+                    }else{
+                        $scope.isAdmin = false;
                     }
                 }
 
 
                 // PUBLIC
                 // ----------------------------------------------------------------------------
+                function deleteUser(){
+                    var userId = $stateParams.userId, 
+                        typeUser = $stateParams.typeUser; 
+                    DataService.deleteUser(userId, typeUser)
+                        .then(function(data){
+                            alertify.success("Utilisateur supprimé");
+                            $state.go('home');
+                        })
+                        .catch(function(err){
+                            console.log(err);
+                            alertify.error("Probléme lors de la suppression de l'utilisateur");
+                        })
+                }
+          
                 function goToProject(projectId) {
                     $state.go('project', {
                         projectId: projectId
@@ -85,12 +123,22 @@
 
                 // PRIVATE
                 // ----------------------------------------------------------------------------
+                function initAdminPart(){
+                    DataService.getProjectArchive()
+                        .then(function(data){
+                            $scope.projets = data;
+                        })
+                    DataService.getUsers()
+                        .then(function(data){
+                            $scope.users = data.users;
+                        })
+                }
+          
                 function initStatistique() {
-
                     DataService.getStatistique($stateParams.userId)
                         .then(function (data) {
                             $scope.stats = data.stats;
-
+                        
                             if (data.stats.dataChart.completed == 0 && data.stats.dataChart.notCompleted == 0 && data.stats.dataChart.depassed == 0) {
                                 $scope.hideChart = true;
                             } else {

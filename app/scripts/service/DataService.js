@@ -24,9 +24,12 @@
                     getContributionWithProjectsOfUser: getContributionWithProjectsOfUser,
                     createTransaction: createTransaction,
                     getProjectOfUser: getProjectOfUser,
+                    getProjectArchive: getProjectArchive,
                     addProject: addProject,
                     getProposeur: getProposeur,
                     getCategories: getCategories,
+                    updateCategorie: updateCategorie,
+                    deleteUser: deleteUser,
                     createTagFromProject: createTagFromProject,
                     updateProject: updateProject,
                     createContributeur: createContributeur,
@@ -34,10 +37,10 @@
                     archiveProposeur: archiveProposeur,
                     deleteContrepartie: deleteContrepartie,
                     deleteTag: deleteTag,
-                    archiveProject: archiveProject,
                     createProposeur: createProposeur,
                     createContrepartie: createContrepartie,
-                    getProjectTyephead: getProjectTyephead,
+                    getProjectTypehead: getProjectTypehead,
+                    getUsers: getUsers,
                     searchProjet: searchProjet
                 });
 
@@ -51,7 +54,19 @@
                 }
 
                 function getProjectFrontPage() {
-                    var request = $http.get(apiServer + '/api/Projets');
+                    var request = $http.get(apiServer + '/api/Projets?filter={"where":{"estMisEnAvant":true}}');
+                    return request.then(handleSuccess, handleError);
+                }
+
+                function getUsers() {
+                    var request = $http.post(apiServer + '/api/CompteUsers/getUsers');
+                    return request.then(handleSuccess, handleError);
+                }
+
+                function deleteUser(userId, typeUser) {
+                    var request = $http.put(apiServer + '/api/Compte'+typeUser+"s/"+userId,{
+                        estCompteActif: false
+                    });
                     return request.then(handleSuccess, handleError);
                 }
 
@@ -79,6 +94,13 @@
 
                 function getCategories() {
                     var request = $http.get(apiServer + '/api/Categories');
+                    return request.then(handleSuccess, handleError);
+                }
+
+                function updateCategorie(id, categorie) {
+                    var request = $http.put(apiServer + '/api/Projets/'+id,{
+                        categorieId : categorie.id
+                    });
                     return request.then(handleSuccess, handleError);
                 }
 
@@ -117,8 +139,8 @@
                     return request.then(handleSuccess, handleError);
                 }
 
-                function getUser(userId) {
-                    var request = $http.post(apiServer + '/api/CompteUsers/getUser', userId);
+                function getUser(userId, typeUser) {
+                    var request = $http.post(apiServer + '/api/CompteUsers/getUser', userId, typeUser);
                     return request.then(handleSuccess, handleError);
                 }
 
@@ -129,11 +151,6 @@
 
                 function updateCompteContributeur(user) {
                     var request = $http.put(apiServer + '/api/CompteContributeurs/' + user.id, user);
-                    return request.then(handleSuccess, handleError);
-                }
-
-                function archiveProject(projetId, data) {
-                    var request = $http.put(apiServer + '/api/Projets/' + projetId, data);
                     return request.then(handleSuccess, handleError);
                 }
 
@@ -164,13 +181,14 @@
 
                 function archiveProject(projectId) {
                     var request = $http.put(apiServer + '/api/Projets/' + projectId, {
-                        estArchive: true
+                        estArchive: true, 
+                        dateArchivage: new Date()
                     });
                     return request.then(handleSuccess, handleError);
                 }
 
-                function getProjectTyephead() {
-                    var request = $http.get(apiServer + '/api/Projets?filter={"fields":{"id":"true","titre":"true"}}');
+                function getProjectTypehead() {
+                    var request = $http.get(apiServer + '/api/Projets?filter={"fields":{"id":"true","titre":"true","dateExpiration":"true","estArchive":"true"}}');
                     return request.then(handleSuccess, handleError);
                 }
 
@@ -198,6 +216,11 @@
 
                 function getProjectOfUser(userId) {
                     var request = $http.get(apiServer + '/api/Projets?filter={"where":{"and":[{"estArchive":"false"},{"compteProposeurId":' + userId + '}]}}');
+                    return request.then(handleSuccess, handleError);
+                }
+
+                function getProjectArchive() {
+                    var request = $http.get(apiServer + '/api/Projets?filter={"where":{"estArchive":"true"}}');
                     return request.then(handleSuccess, handleError);
                 }
 

@@ -40,7 +40,8 @@
                             var dateExpirationFrontPage = moment(new Date()).add(nbWeek, 'week');
                         }
                         DataService.updateProject($stateParams.projectId, {
-                                "dateExpirationMisEnAvant": dateExpirationFrontPage
+                                "dateExpirationMisEnAvant": dateExpirationFrontPage, 
+                                "estMisEnAvant":true
                             })
                             .then(function () {
                                 alertify.success("Votre financement a bien été pris en compte, votre projet est mis en avant jusq'au " + dateExpirationFrontPage.format('DD MMM YYYY'));
