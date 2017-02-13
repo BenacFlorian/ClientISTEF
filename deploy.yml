@@ -1,0 +1,13 @@
+---
+
+- name: Deploy DK Connect
+  hosts: all
+  tasks:
+  - name: Copy artifact
+    copy: src={{artifact_path}}/flo-client.tar.gz dest=/tmp/flo-client.tar.gz
+
+  - name: Delete previous archive
+    file: path=/var/www/flo-client state="absent"
+
+  - name: Extract artifact
+    unarchive: src={{ artifact_path }}/flo-client.tar.gz dest=/var/www

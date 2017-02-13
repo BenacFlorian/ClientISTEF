@@ -164,6 +164,19 @@ module.exports = function (grunt) {
                 src: ['test/spec/{,*/}*.js']
             }
         },
+        // configure compress to tar the whole project
+        compress: {
+            main: {
+                options: {
+                    mode: 'tgz',
+                    // archive: 'target/<%= pkg.name %>.v<%= pkg.version %>.zip',
+                    archive: 'target/flo-client.tar.gz',
+                    pretty: true
+                },
+                expand: true,
+                src: ['**/*']
+            }
+        },
 
         // Empties folders to start fresh
         clean: {
@@ -425,7 +438,7 @@ module.exports = function (grunt) {
         'svgmin'
       ]
         },
-
+        
         // Test settings
         karma: {
             unit: {
