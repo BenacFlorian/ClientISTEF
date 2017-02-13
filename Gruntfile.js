@@ -413,9 +413,7 @@ module.exports = function (grunt) {
         'copy:styles'
       ],
             dist: [
-        'copy:styles',
-        'imagemin',
-        'svgmin'
+        'copy:styles'
       ]
         },
         
@@ -463,17 +461,14 @@ module.exports = function (grunt) {
     'clean:dist',
     'wiredep',
     'concurrent:dist',
-    'concat',
     'ngAnnotate',
-    'cssmin',
-    'uglify',
     'filerev',
     'usemin',
-    'htmlmin'    
+    'htmlmin',        
+    'compress'
   ]);
 
     grunt.registerTask('default', [
-    'build',
-    'compress'
+    'build'
   ]);
 };
