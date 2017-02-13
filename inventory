@@ -1,2 +1,2 @@
 [flo]
-projet-d-oc.webinage.net ansible_ssh_user=root
+projet-d-oc.webinage.net ansible_ssh_user=root ansible_host=178.32.128.88
