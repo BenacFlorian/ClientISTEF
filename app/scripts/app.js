@@ -20,6 +20,7 @@ angular
     'ngTouch',
     'nvd3',
     'ksSwiper',
+    'ui.select',
     'ngAlertify'
   ])
 

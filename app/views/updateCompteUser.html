@@ -34,6 +34,19 @@
                         <input type="text" id="address" name="firstnaddressame" placeholder="" class="form-control" style="width: 40%;" ng-model="user.adresse">
                     </div>
                 </div>
+                <div class="control-group">
+                    <label for="" class="control-label labelDataUser">Sélectionnez vos catégories préférées</label>
+                    <div class="controls">
+                        <ui-select multiple id="categories_select" class="form-control" style="width: 40%;" ng-model="dataCategorie.selectedCategories">
+                            <ui-select-match>
+                                {{$item.label}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="item in (dataCategorie.categories | filter: $select.search)">
+                                <span ng-bind="item.label"></span>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
             </div>
             <div class="col-lg-6">
                 <div class="control-group">

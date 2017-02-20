@@ -9,8 +9,8 @@
     'use strict';
 
     angular.module('clientApp')
-        .controller('InscriptionCtrl', ['$scope', '$state', 'alertify', 'DataService', 'FileService',
-      function ($scope, $state, alertify, DataService, FileService) {
+        .controller('InscriptionCtrl', ['$scope', '$state', 'alertify', 'DataService', 'FileService', '$q',
+      function ($scope, $state, alertify, DataService, FileService, $q) {
 
                 $scope.init = init;
                 $scope.createUser = createUser;
@@ -23,17 +23,27 @@
 
                     // DEBUG
                     /*$scope.lastName = "demo";
-$scope.firstName = "contrib";
-$scope.address = "5 rue de la demo";
-$scope.city = "31400";
-$scope.zipCode = "Toulouse";
-$scope.nameUser = "Contributeur";
-$scope.email = "contrib@demo.fr";
-$scope.password = "contrib";
-$scope.passwordConfirm = "contrib";
-$scope.description = "Je suis un contributeur qui contribue au bonheur de tous et à l’avènement de projet majeur qui vont révolutionner le monde, compter sur ma bourse pour aider les plus démunis. \n \n I'M BATMAN.";*/
+                    $scope.firstName = "contrib";
+                    $scope.address = "5 rue de la demo";
+                    $scope.city = "31400";
+                    $scope.zipCode = "Toulouse";
+                    $scope.nameUser = "Contributeur";
+                    $scope.email = "contrib@demo.fr";
+                    $scope.password = "contrib";
+                    $scope.passwordConfirm = "contrib";
+                    $scope.description = "Je suis un contributeur qui contribue au bonheur de tous et à l’avènement de projet majeur qui vont révolutionner le monde, compter sur ma bourse pour aider les plus démunis. \n \n I'M BATMAN.";*/
                     initDatePicker();
-                    $('#toggle').bootstrapToggle('on');
+                    initCategorieMultipleSelect();
+                    $('#toggle').bootstrapToggle('off');
+                    $scope.typeUser = "Contributeur";
+                    $('#toggle').change(function() {
+                        if($scope.typeUser == "Contributeur"){
+                            $scope.typeUser = "Proposeur";
+                        }else{
+                            $scope.typeUser = "Contributeur";
+                        }
+                        $scope.$apply();
+                    });
                 }
 
                 // PUBLIC
@@ -60,6 +70,9 @@ $scope.description = "Je suis un contributeur qui contribue au bonheur de tous e
                                     "avatarUrl": apiServer + "/api/containers/Contributeur/download/" + $scope.email
                                 })
                                 .then(function (user) {
+                                    return manageCategoriesPreferees(user);
+                                })
+                                .then(function (user) {
                                     loadAvatar("Contributeur")
                                         .then(function () {
                                             alertify.success("Le compte a bien été créé. Vous pouvez dés maintenant vous connecter")
@@ -69,6 +82,7 @@ $scope.description = "Je suis un contributeur qui contribue au bonheur de tous e
                                     if (err == "Error 422 (Unprocessable Entity): [object Object]") {
                                         alertify.error("Un compte avec cet email existe déjà");
                                     }
+                                    alertify.error("Erreur lors de la création de votre compte");
                                     console.log(err);
                                 });
                         } else {
@@ -97,6 +111,7 @@ $scope.description = "Je suis un contributeur qui contribue au bonheur de tous e
                                     if (err == "Error 422 (Unprocessable Entity): [object Object]") {
                                         alertify.error("Un compte avec cet email existe déjà");
                                     }
+                                    alertify.error("Erreur lors de la création de votre compte");
                                     console.log(err);
                                 });
                         }
@@ -126,6 +141,16 @@ $scope.description = "Je suis un contributeur qui contribue au bonheur de tous e
                         });
                 }
 
+                function manageCategoriesPreferees(user){
+                    var categories = $scope.dataCategorie.selectedCategories, 
+                        tabOfPromise = [], 
+                        size = categories.length;
+                    for(var i = 0; i < size; i++){
+                        tabOfPromise.push(DataService.addLinkCategorieContributeur(user, categories[i]));
+                    }
+                    return $q.all(tabOfPromise);
+                }
+          
                 function manageUpload(typeUser) {
 
                     var img = $scope.file,
@@ -240,6 +265,20 @@ $scope.description = "Je suis un contributeur qui contribue au bonheur de tous e
                     return true;
                 }
 
+                function initCategorieMultipleSelect(){
+                    DataService.getCategories()
+                        .then(function(data){
+                            $scope.dataCategorie = {
+                                categories : data, 
+                                selectedCategories: []
+                            }
+                        })
+                        .catch(function(err){
+                            alertify.error("Erreur lors du chargement des catégories");
+                            console.log("Erreur getCategories: "+err);
+                        })
+                }
+          
                 function initDatePicker() {
 
                     var locale = {
@@ -247,13 +286,13 @@ $scope.description = "Je suis un contributeur qui contribue au bonheur de tous e
                         cancelLabel: 'Annuler',
                         fromLabel: "Début",
                         toLabel: "Fin",
-                        firstDay: 0,
                         format: 'DD/MM/YYYY'
                     };
 
                     $scope.dpkOptions = {
                         singleDatePicker: true,
-                        locale: locale
+                        locale: locale,
+                        startDate: moment(new Date())
                     };
                 }
 

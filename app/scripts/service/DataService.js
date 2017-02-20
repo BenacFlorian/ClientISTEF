@@ -17,6 +17,7 @@
                     getCategorieWithProject: getCategorieWithProject,
                     getCategorieProjectCount: getCategorieProjectCount,
                     getUser: getUser,
+                    getUserCategoriePreferees: getUserCategoriePreferees,
                     getContributeur: getContributeur,
                     updateCompteContributeur: updateCompteContributeur,
                     updateCompteProposeur: updateCompteProposeur,
@@ -29,6 +30,7 @@
                     getProposeur: getProposeur,
                     getCategories: getCategories,
                     updateCategorie: updateCategorie,
+                    addLinkCategorieContributeur: addLinkCategorieContributeur,
                     deleteUser: deleteUser,
                     createTagFromProject: createTagFromProject,
                     updateProject: updateProject,
@@ -38,6 +40,7 @@
                     deleteContrepartie: deleteContrepartie,
                     deleteTag: deleteTag,
                     createProposeur: createProposeur,
+                    deleteRelCategorieUser: deleteRelCategorieUser,
                     createContrepartie: createContrepartie,
                     getProjectTypehead: getProjectTypehead,
                     getUsers: getUsers,
@@ -104,6 +107,11 @@
                     return request.then(handleSuccess, handleError);
                 }
 
+                function addLinkCategorieContributeur(user, categorie) {
+                    var request = $http.put(apiServer + '/api/CompteContributeurs/'+user.id+'/categoriesPreferees/rel/'+categorie.id);
+                    return request.then(handleSuccess, handleError);
+                }
+
                 function getCategorieProjectCount(categorieId) {
                     var request = $http.get(apiServer + '/api/Categories/' + categorieId + '/projets/count?filter={"where":{"estArchive":"false"}}');
                     return request.then(handleSuccess, handleError);
@@ -139,8 +147,18 @@
                     return request.then(handleSuccess, handleError);
                 }
 
+                function deleteRelCategorieUser(user, categorie) {
+                    var request = $http.delete(apiServer + '/api/CompteContributeurs/'+user.id+'/categoriesPreferees/rel/'+categorie.id);
+                    return request.then(handleSuccess, handleError);
+                }
+
                 function getUser(userId, typeUser) {
                     var request = $http.post(apiServer + '/api/CompteUsers/getUser', userId, typeUser);
+                    return request.then(handleSuccess, handleError);
+                }
+
+                function getUserCategoriePreferees(userId, typeUser) {
+                    var request = $http.get(apiServer + '/api/CompteContributeurs/'+userId+'/categoriesPreferees');
                     return request.then(handleSuccess, handleError);
                 }
 

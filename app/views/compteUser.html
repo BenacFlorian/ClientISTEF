@@ -7,8 +7,11 @@
             <blockquote>
                 <p>
                     {{user.nom}} {{user.prenom}}
-                </p> <small><age ng-show="user.dateNaissance">{{formatAge(user.dateNaissance)}} ans </age><cite>Toulouse</cite></small>
+                </p> <small><age ng-show="user.dateNaissance">{{formatAge(user.dateNaissance)}} ans </age><cite>{{user.ville}}</cite></small>
             </blockquote>
+            <div id="categoriePreferees" class="col-lg-4 pull-left">
+                <button class="inlineBlock btn btn-warning btnCategoriePreferee" ng-click="goToCategorie(categorie.id)" ng-repeat="categorie in categories track by categorie.id">{{categorie.label}}</button>
+            </div>
         </div>
         <div class="col-md-2 column" ng-show="showEditing">
             <span class="glyphicon glyphicon-pencil pull-right" ng-click="goToUpdateCompteUser()"></span>
@@ -20,7 +23,7 @@
     </div>
     <div class="row clearfix">
         <div class="col-md-12 column">
-            <div class="tabbable" id="tabs-444468">
+            <div class="tabbable">
                 <ul class="nav nav-tabs">
                     <li class="active">
                         <a href="compteUser#aPropos" data-toggle="tab">A propos...</a>

@@ -48,6 +48,19 @@
                         <input type="text" id="city" name="city" placeholder="" class="form-control" style="width: 40%;" ng-model="city">
                     </div>
                 </div>
+                <div class="control-group" ng-show="typeUser == 'Contributeur'">
+                    <label for="" class="control-label labelDataUser">Sélectionnez vos catégories préférées</label>
+                    <div class="controls">
+                        <ui-select multiple id="categories_select" class="form-control" style="width: 40%;" ng-model="dataCategorie.selectedCategories">
+                            <ui-select-match>
+                                {{$item.label}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="item in (dataCategorie.categories | filter: $select.search)">
+                                <span ng-bind="item.label"></span>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
             </div>
             <div class="col-lg-6">
                 <div class="control-group">
@@ -86,7 +99,7 @@
                 </div>
                 <div class="control-group" data-toggle="buttons" style="margin-top: 5%">
                     <label class="control-label labelTypeUser" for="typeUser">Type de compte : </label>
-                    <input id="toggle" type="checkbox" data-on="Proposeur" data-off="Contributeur" data-onstyle="warning" data-offstyle="info" />
+                    <input id="toggle" type="checkbox" data-on="Proposeur" data-off="Contributeur" data-onstyle="warning" data-offstyle="info"/>
                 </div>
                 <div class="control-group">
                     <!-- Button -->

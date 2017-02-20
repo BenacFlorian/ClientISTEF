@@ -18,6 +18,7 @@
                 $scope.formatDate = formatDate;
                 $scope.deleteUser = deleteUser;
                 $scope.goToUpdateCompteUser = goToUpdateCompteUser;
+                $scope.goToCategorie = goToCategorie;
 
                 $scope.init();
 
@@ -74,6 +75,10 @@
                         $scope.showProject = true;
                         $scope.showContribution = false;
                     } else {
+                        DataService.getUserCategoriePreferees(userId)
+                            .then(function(data){
+                                $scope.categories = data;
+                            })
                         initTable();
                         $scope.showProject = false;
                         $scope.showContribution = true;
@@ -104,7 +109,17 @@
                             alertify.error("Probléme lors de la suppression de l'utilisateur");
                         })
                 }
-          
+                
+                function goToCategorie(id) {
+                    if (id) {
+                        $state.go('categoriesProjects', {
+                            categorieId: id
+                        });
+                    } else {
+                        alertify.error("Erreur durant la récupération de donnée");
+                    }
+                }
+                
                 function goToProject(projectId) {
                     $state.go('project', {
                         projectId: projectId

@@ -22,6 +22,7 @@
 
                 function init() {
                     var userId = UserService.getIdUser();
+                    initCategorieMultipleSelect(userId);
                     if (UserService.getTypeUser() == "Contributeur") {
                         DataService.getContributeur(userId)
                             .then(function (user) {
@@ -43,6 +44,9 @@
                     if (UserService.getTypeUser() == "Contributeur") {
                         DataService.updateCompteContributeur($scope.user)
                             .then(function (compteUser) {
+                                return manageRelationBetweenContributeurAndCategorie(compteUser);
+                            })
+                            .then(function(){
                                 if($scope.file){
                                     loadAvatar(UserService.getTypeUser())
                                         .then(function () {
@@ -115,7 +119,52 @@
                 // PRIVATE
                 // ----------------------------------------------------------------------------
 
+                // INIT PART 
+                function initCategorieMultipleSelect(userId){
+                    DataService.getCategories(userId)
+                        .then(function(data){
+                            $scope.dataCategorie = {
+                                categories : data, 
+                                selectedCategories: []
+                            };
+                            return DataService.getUserCategoriePreferees(userId);
+                        })
+                        .then(function(categoriesPreferees){
+                            $scope.dataCategorie.selectedCategories = categoriesPreferees;
+                        })
+                        .catch(function(err){
+                            alertify.error("Erreur lors du chargement des catégories");
+                            console.log("Erreur getCategories: "+err);
+                        })
+                }
+          
                 // UPDATE DATA PART
+                function manageRelationBetweenContributeurAndCategorie(user){
+                    return DataService.getUserCategoriePreferees(user.id)
+                        .then(function(categoriePreferees){
+                            // delete all relation
+                            var tabOfPromise = [],
+                                size = categoriePreferees.length; 
+                            for(var i = 0; i < size; i++){
+                                tabOfPromise.push(DataService.deleteRelCategorieUser(user, categoriePreferees[i]));
+                            }
+                            return $q.all(tabOfPromise);
+                        })
+                        .then(function(){
+                            // re-create all relation
+                            var tabOfPromise = [],
+                                size = $scope.dataCategorie.selectedCategories.length; 
+                            for(var i = 0; i < size; i++){
+                                tabOfPromise.push(DataService.addLinkCategorieContributeur(user, $scope.dataCategorie.selectedCategories[i]));
+                            }
+                            return $q.all(tabOfPromise);
+                        })
+                        .catch(function(err){
+                            alertify.error("Erreur durant la mise à jour des catégories préférées"); 
+                            console.log("Error : "+err);
+                        });
+                }
+          
                 function loadAvatar(typeUser) {
                     return FileService.getFiles(typeUser)
                         .then(function (files) {
