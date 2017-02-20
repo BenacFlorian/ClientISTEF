@@ -456,12 +456,18 @@ module.exports = function (grunt) {
     'connect:test',
     'karma'
   ]);
-
+    
     grunt.registerTask('build', [
     'clean:dist',
     'wiredep',
+    'useminPrepare',
     'concurrent:dist',
+    'concat',
     'ngAnnotate',
+    'copy:dist',
+    'cdnify',
+    'cssmin',
+    'uglify',
     'filerev',
     'usemin',
     'htmlmin',        
