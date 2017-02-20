@@ -8,8 +8,6 @@
                         <p class="dateExpirationFrontPageLabel">Date fin de mise en avant : </p>
                         <p class="dateExpirationFrontPageLabel"><b>{{project.dateExpirationMisEnAvant}}</b></p>
                     </div>
-                    
-                    
                     <select class="input form-control" name="selectCategorie" id="selectCategorie" ng-change="categorieChange()" ng-options="categorie.label for categorie in dataCategorie.tabOfCategorie" ng-model="dataCategorie.selectedCategorie" ng-show="definingCategorie">
                         <option value=''></option>
                     </select>
@@ -90,6 +88,27 @@
                                     <ul>
                                         <li> {{contrepartie.value}} </li>
                                     </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 contributeurDataContainer">
+                        <div class="row award">
+                            <div class="panel panel-default">
+                                <div class="panel-heading"><b>Information contributeurs</b></div>
+                                <div class="panel-body">
+                                    <table style="width:100%" class="table-responsive tableContribution" ng-show="contributions.length > 0">
+                                        <tr>
+                                            <th>Email</th>
+                                            <th>Montant</th>
+                                            <th>Date</th>
+                                        </tr>
+                                        <tr ng-repeat="contribution in contributions">
+                                            <td>{{contribution.compteContributeur.email}}</td>
+                                            <td>{{contribution.somme}}€</td>
+                                            <td>{{formatDate(contribution.date)}}</td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                         </div>

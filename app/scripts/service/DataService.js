@@ -86,7 +86,7 @@
                 }
 
                 function getProject(projectId) {
-                    var request = $http.get(apiServer + '/api/Projets/' + projectId + '?filter={"include":[{"relation":"compteProposeur"},{"relation":"contreparties"},{"relation":"photos"},{"relation":"tags"},{"relation":"categorie"}]}');
+                    var request = $http.get(apiServer + '/api/Projets/' + projectId + '?filter={"include":[{"relation":"compteProposeur"},{"relation":"contreparties"},{"relation":"photos"},{"relation":"tags"},{"relation":"categorie"},{"relation":"contributions","scope":{"include":{"relation":"compteContributeur"}}}]}');
                     return request.then(handleSuccess, handleError);
                 }
 

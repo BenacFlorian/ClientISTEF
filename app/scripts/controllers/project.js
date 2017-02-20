@@ -24,6 +24,8 @@
           
                 $scope.defineCategorie = defineCategorie;
                 $scope.categorieChange = categorieChange;
+          
+                $scope.formatDate = formatDate;
 
                 $scope.init();
           
@@ -55,6 +57,7 @@
                             }
                             $scope.proposeur = project.compteProposeur;
                             $scope.contreparties = project.contreparties;
+                            $scope.contributions = project.contributions;
                 
                             // si le projet a une date d'expiration et qu'elle est dans le futur
                             if (project.dateExpirationMisEnAvant && moment(project.dateExpirationMisEnAvant).isAfter(moment(new Date()))) {
@@ -77,7 +80,11 @@
 
                 // PUBLIC
                 // ----------------------------------------------------------------------------
-
+          
+                function formatDate(date) {
+                    return moment(date).format('DD MMM YYYY');
+                }
+          
                 function deleteProject(projectId) {
                     DataService.archiveProject(projectId)
                         .then(function () {
