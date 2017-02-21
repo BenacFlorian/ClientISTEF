@@ -266,8 +266,12 @@ module.exports = function (grunt) {
           '<%= yeoman.dist %>/styles'
         ],
                 patterns: {
-                    js: [[/(images\/[^''""]*\.(png|jpg|jpeg|gif|webp|svg))/g, 'Replacing references to images']]
+                    js: [
+                            [/(images\/.*?\.(?:gif|jpeg|jpg|png|webp))/gm, 'Update the JS to reference our revved images']
+                        ]
                 }
+                
+                    
             }
         },
 
@@ -378,43 +382,50 @@ module.exports = function (grunt) {
                     cwd: '<%= yeoman.app %>',
                     dest: '<%= yeoman.dist %>',
                     src: [
-            '*.{ico,png,txt}',
-            '.htaccess',
-            '*.html',
-            'images/{,*/}*.{webp}',
-            'styles/fonts/{,*/}*.*'
-          ]
-        }, {
-                    expand: true,
-                    cwd: '.tmp/images',
-                    dest: '<%= yeoman.dist %>/images',
-                    src: ['generated/*']
-        }, {
-                    expand: true,
-                    cwd: 'bower_components/bootstrap/dist',
-                    src: 'fonts/*',
-                    dest: '<%= yeoman.dist %>'
-        }]
+                    '*.{ico,png,txt}',
+                    '.htaccess',
+                    '*.html',
+                    'images/{,*/}*.{webp}',
+                    'styles/fonts/{,*/}*.*'
+                  ]
+                }, {
+                            expand: true,
+                            cwd: '.tmp/images',
+                            dest: '<%= yeoman.dist %>/images',
+                            src: ['generated/*']
+                }, {
+                            expand: true,
+                            cwd: 'bower_components/bootstrap/dist',
+                            src: 'fonts/*',
+                            dest: '<%= yeoman.dist %>'
+                }]
             },
             styles: {
                 expand: true,
                 cwd: '<%= yeoman.app %>/styles',
                 dest: '.tmp/styles/',
                 src: '{,*/}*.css'
+            },
+            images: {
+                expand: true,
+                cwd: '<%= yeoman.app %>/images',
+                dest: '<%= yeoman.dist %>/images',
+                src: '{,*/}*.{png,jpg,jpeg,gif}'
             }
         },
 
         // Run some tasks in parallel to speed up the build process
         concurrent: {
             server: [
-        'copy:styles'
-      ],
+                'copy:styles'
+              ],
             test: [
-        'copy:styles'
-      ],
+                'copy:styles'
+              ],
             dist: [
-        'copy:styles'
-      ]
+                'copy:styles',
+                'copy:images'
+              ]
         },
         
         // Test settings
