@@ -11,7 +11,7 @@
                     {{user.nom}} {{user.prenom}}
                 </p> <small><age ng-show="user.dateNaissance">{{formatAge(user.dateNaissance)}} ans </age><cite>{{user.ville}}</cite></small>
             </blockquote>
-            <div id="categoriePreferees" class="col-lg-4 pull-left">
+            <div id="categoriePreferees" class="col-lg-4 pull-left" ng-show="typeUser == 'Contributeur'">
                 <button class="inlineBlock btn btn-warning btnCategoriePreferee" ng-click="goToCategorie(categorie.id)" ng-repeat="categorie in categories track by categorie.id">{{categorie.label}}</button>
             </div>
         </div>
@@ -229,6 +229,7 @@
                                     <th>Nom</th>
                                     <th>Type compte</th>
                                     <th>Date creation</th>
+                                    <th>Est actif</th>
                                 </tr>
                                 <tr ng-repeat="user in users">
                                     <td class="col-lg-1"><img class="thumbnail img-responsive" ng-src="{{user.avatarUrl}}" style="margin-bottom:0;"></td>
@@ -237,6 +238,7 @@
                                     <td ng-if="user.proposeur">Proposeur</td>
                                     <td ng-if="!user.proposeur">Contributeur</td>
                                     <td>{{formatDate(user.created)}}</td>
+                                    <td>{{formatEstActif(user.estCompteActif)}}</td>
                                 </tr>
                             </table>
                         </div>

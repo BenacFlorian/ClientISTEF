@@ -52,8 +52,8 @@
                                 <p>{{project.description}}</p>
                             </div>
                             <div class="row containerVideo" ng-show="haveVideo">
-                                <div class="col-lg-12 ">
-                                    <iframe width="100%" ng-repeat="video in project.videos" ng-src="{{project.urlVideo}}" frameborder="0" allowfullscreen></iframe>
+                                <div id="video" class="col-lg-12 ">
+                                    
                                 </div>
                             </div>
                         </div>
@@ -98,7 +98,8 @@
                         <div class="row award">
                             <div class="panel panel-default">
                                 <div class="panel-heading"><b>Information contributeurs</b></div>
-                                <div class="panel-body">
+                                <div class="panel-body" >
+                                    <p ng-show="contributions.length == 0"> Aucune contribution</p>
                                     <table style="width:100%" class="table-responsive tableContribution" ng-show="contributions.length > 0">
                                         <tr>
                                             <th>Email</th>

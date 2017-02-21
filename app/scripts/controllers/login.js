@@ -83,6 +83,10 @@
                                                 $state.go('home');
                                             });
                                         })
+                                        .catch(function(err){
+                                            alertify.error("Le compte associé à ce compte facebook n'est plus actif");
+                                            console.log(err);
+                                        })
                                 }else{
                                     UserService.setDataFacebook(response);
                                     $state.go('inscriptionFace');

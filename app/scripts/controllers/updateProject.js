@@ -196,10 +196,6 @@
                                 }
                                 return $q.all(tabOfPromise);
                             })
-                            .then(function () {
-                                // delete temp container 
-                                return FileService.deleteContainer($scope.tempIdProject);
-                            })
                             .then(function (data) {
                                 alertify.success("Projet actualiser avec succéss");
                                 console.log('Projet crée');

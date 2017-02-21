@@ -21,11 +21,15 @@
                 // -------------------------------------------------
 
                 function init() {
+                    $scope.pictureIsShow = true;
                     var userId = UserService.getIdUser();
                     if (UserService.getTypeUser() == "Contributeur") {
                         initCategorieMultipleSelect(userId);
                         DataService.getContributeur(userId)
                             .then(function (user) {
+                                if(user.idFacebook){
+                                    $scope.pictureIsShow = false;
+                                }
                                 $scope.email = user.email;
                                 $scope.user = user;
                             });
@@ -33,6 +37,9 @@
                     } else {
                         DataService.getProposeur(userId)
                             .then(function (user) {
+                                if(user.idFacebook){
+                                    $scope.pictureIsShow = false;
+                                }
                                 $scope.email = user.email;
                                 $scope.user = user;
                             });
@@ -92,7 +99,15 @@
                 function deleteCompteUser() {
                     var userId = UserService.getIdUser();
                     if (UserService.getTypeUser() == "Contributeur") {
-                        archiveCompte(userId);
+                        archiveCompte(userId)
+                            .then(function(data){
+                                UserService.logout(UserService.getIdUser())
+                                    .then(function () {
+                                        TokenService.removeToken();
+                                        $state.go('home');
+                                    });
+                                alertify.success("Votre compte a été désactivé");
+                            });
                     } else {
                         DataService.getProjectOfUser(userId)
                             .then(function (projects) {

@@ -9,8 +9,8 @@
     'use strict';
 
     angular.module('clientApp')
-        .controller('InscriptionCtrl', ['$scope', '$state', 'alertify', 'DataService', 'FileService', '$q',
-      function ($scope, $state, alertify, DataService, FileService, $q) {
+        .controller('InscriptionCtrl', ['$scope', '$state', 'alertify', 'DataService', 'FileService', '$q','UserService', 'TokenService',
+      function ($scope, $state, alertify, DataService, FileService, $q, UserService, TokenService) {
 
                 $scope.init = init;
                 $scope.createUser = createUser;
@@ -75,6 +75,7 @@
                                 .then(function (user) {
                                     loadAvatar("Contributeur")
                                         .then(function () {
+                                            login();
                                             alertify.success("Le compte a bien été créé. Vous pouvez dés maintenant vous connecter")
                                         })
                                 })
@@ -104,6 +105,7 @@
                                 .then(function (user) {
                                     loadAvatar("Proposeur")
                                         .then(function () {
+                                            login();
                                             alertify.success("Le compte a bien été créé. Vous pouvez dés maintenant vous connecter")
                                         })
                                 })
@@ -122,6 +124,29 @@
 
                 // PRIVATE
                 // ----------------------------------------------------------------------------
+                function login(){
+                    UserService.login({
+                            email: $scope.email,
+                            password: $scope.password
+                        })
+                        .then(function (data) {
+                            UserService.setIdUser(data.token.userId);
+                            UserService.setTypeUser(data.token.typeUser);
+                            TokenService.setToken(data.token.id);
+                            DataService.getUser({
+                                userId: data.token.userId,
+                                typeUser: data.token.typeUser
+                            }).then(function (data) {
+                                alertify.success("Bienvenue " + data.user.username);
+                                $state.go('home');
+                            });
+                        })
+                        .catch(function (err) {
+
+                            alertify.error("Ce compte n'existe pas ou n'est plus actif");
+                        })
+                }      
+          
                 function loadAvatar(typeUser) {
                     return FileService.getFiles(typeUser)
                         .then(function (files) {

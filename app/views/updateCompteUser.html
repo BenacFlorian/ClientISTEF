@@ -73,8 +73,8 @@
                     </div>
                     <div class="divAddPicture col-lg-8">
                         <label class="control-label" for="description">Avatar </label>
-                        <input type="file" id="pictureAddedProject" file-model="file">
-                        <p class="help-block">Merci de charger des fichiers jpg ou png de 400Ko max</p>
+                        <input type="file" id="pictureAddedProject" file-model="file" ng-show="pictureIsShow">
+                        <p class="help-block" ng-show="pictureIsShow">Merci de charger des fichiers jpg ou png de 400Ko max</p>
                     </div>
                 </div>
                 <div class="control-group">

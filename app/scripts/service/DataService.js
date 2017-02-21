@@ -213,7 +213,7 @@
                 }
 
                 function getProjectTypehead() {
-                    var request = $http.get(apiServer + '/api/Projets?filter={"fields":{"id":"true","titre":"true","dateExpiration":"true","estArchive":"true"}}');
+                    var request = $http.get(apiServer + '/api/Projets?filter={"fields":{"id":"true","titre":"true","dateExpiration":"true","estArchive":"true"},"where":{"estArchive":"false"}}');
                     return request.then(handleSuccess, handleError);
                 }
 

@@ -9,8 +9,8 @@
     'use strict';
 
     angular.module('clientApp')
-        .controller('ProjectCtrl', ['$scope', '$state', '$stateParams', 'DataService', 'UserService', 'alertify',
-      function ($scope, $state, $stateParams, DataService, UserService, alertify) {
+        .controller('ProjectCtrl', ['$scope', '$state', '$stateParams', 'DataService', 'UserService', 'alertify', '$sce',
+      function ($scope, $state, $stateParams, DataService, UserService, alertify, $sce) {
 
                 $scope.init = init;
 
@@ -70,12 +70,17 @@
                             $scope.project = project;
                             getImgListUrl(project);
                             if (project.urlVideo) {
+                                $("#video")[0].innerHTML ='<iframe width="400" height="100" src="https://www.youtube.com/embed/'+project.urlVideo.split("v=")[1]+'" frameborder="0" allowfullscreen/><p>YO</p>';
                                 $scope.haveVideo = true;
                             } else {
                                 $scope.haveVideo = false;
                             }
                         })
                 }
+          
+              $scope.trustSrc = function(src) {
+                return $sce.trustAsResourceUrl(src);
+              }
 
 
                 // PUBLIC

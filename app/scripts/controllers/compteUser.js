@@ -9,8 +9,8 @@
     'use strict';
 
     angular.module('clientApp')
-        .controller('CompteUserCtrl', ['$scope', '$state', '$stateParams', 'DataService', 'UserService', 'TokenService', 'alertify',
-      function ($scope, $state, $stateParams, DataService, UserService, TokenService, alertify) {
+        .controller('CompteUserCtrl', ['$scope', '$state', '$stateParams', 'DataService', 'UserService', 'TokenService', 'alertify','$q',
+      function ($scope, $state, $stateParams, DataService, UserService, TokenService, alertify,$q) {
 
                 $scope.init = init;
                 $scope.goToProject = goToProject;
@@ -19,6 +19,7 @@
                 $scope.deleteUser = deleteUser;
                 $scope.goToUpdateCompteUser = goToUpdateCompteUser;
                 $scope.goToCategorie = goToCategorie;
+                $scope.formatEstActif = formatEstActif;
 
                 $scope.init();
 
@@ -96,11 +97,30 @@
 
                 // PUBLIC
                 // ----------------------------------------------------------------------------
+                function formatEstActif(bool){
+                    if(bool){
+                        return "Actif";
+                    }else{
+                        return "Désactivé"
+                    }
+                }   
+                
                 function deleteUser(){
                     var userId = $stateParams.userId, 
                         typeUser = $stateParams.typeUser; 
                     DataService.deleteUser(userId, typeUser)
                         .then(function(data){
+                            return DataService.getProjectOfUser(userId);
+                        })
+                        .then(function(projects){
+                            var size = projects.length, 
+                                tabOfPromise = []; 
+                            for(var i = 0; i < size; i++){
+                                tabOfPromise.push(DataService.archiveProject(projects[i].id));
+                            }
+                            return $q.all(tabOfPromise);
+                        })
+                        .then(function(){
                             alertify.success("Utilisateur supprimé");
                             $state.go('home');
                         })
