@@ -12,4 +12,38 @@
 @import "page/searchResult.less";
 @import "page/contribute.less";
 
-/* STYLE FOR LIBRAIRIES */
+
+@font-face {
+  font-family: 'IndieFlower';
+  src:  url('../fonts/IndieFlower.ttf?v=4.5.0') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Dosis';
+  src:  url('../fonts/Dosis-Light.ttf?v=4.5.0') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+.alertify-logs *{
+    font-family: Dosis;    
+}
+body{
+    background-color: whitesmoke;
+    overflow-x: hidden;
+}
+#imgCroixOccitaneClair{
+    position: absolute;
+    top: -65px;
+    left: -178px;
+    z-index: -10;
+}
+#imgCroixOccitaneFonce{
+    position: absolute;
+    right: -296px;
+    bottom: -186px;
+    z-index: -10;  
+}
+.containerFont{    
+    font-family: Dosis;
+}

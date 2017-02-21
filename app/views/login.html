@@ -1,4 +1,6 @@
-<div class="containerLogin">
+<img id="imgCroixOccitaneClair" alt="140x140" ng-src="../images/croixBleuClair.png"/>
+<img id="imgCroixOccitaneFonce" alt="140x140" ng-src="../images/croixBleuFonce.png"/>
+<div class="col-lg-10 containerLogin containerFont" style="margin-left:30%;">
     <div class="row">
         <h3>Connectez vous ou <a href="#!/inscription"> inscrivez vous !</a></h3>
         <div class="row">
@@ -18,11 +20,6 @@
             <div class="form-group col-lg-12" style="margin-bottom:5%;">
                 <label class="labelLogin pull-left" for="inputPassword">Mot de passe</label>
                 <input type="password" class="form-control inputLogin" id="inputPassword" ng-model="password">
-            </div>
-            <div class="form-group">
-                <label style="margin-left:5%;">
-                    <input type="checkbox"> Se souvenir de moi </label>
-                <a class="pull-right" href="#">Mot de passe oublié ?</a>
             </div>
             <div class="form-group">
                 <button type="submit" class="pull-right btn btn btn-primary" style="margin:0;" ng-click="login()">

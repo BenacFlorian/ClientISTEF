@@ -1,5 +1,7 @@
-<div class="container containerProjectCompte">
-    <div class="row clearfix well" style="margin-top:2%;">
+<img id="imgCroixOccitaneClair" alt="140x140" ng-src="../images/croixBleuClair.png"/>
+<img id="imgCroixOccitaneFonce" alt="140x140" ng-src="../images/croixBleuFonce.png"/>
+<div id="containerProjectCompte" class="col-lg-10 containerFont">
+    <div class="row clearfix well">
         <div class="col-md-2 column">
             <img class="img-thumbnail" alt="140x140" ng-src="{{user.avatarUrl}}" />
         </div>
@@ -108,7 +110,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane" id="projetsUser" style="margin-top:2%;" ng-if="showProject">
+                    <div class="tab-pane" id="projetsUser" style="margin-top:2%;padding-left: 2%;padding-right: 3%;" ng-if="showProject">
                         <h3 ng-show="projects.length == 0"> Aucun projet </h3>
                         <div class="row clearfix containerProjectCompte" ng-repeat="project in projects" ng-if="!project.estArchive">
                             <div class="row">

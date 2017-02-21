@@ -1,4 +1,6 @@
-<div class="containerPage" id="container">
+<img id="imgCroixOccitaneClair" alt="140x140" ng-src="../images/croixBleuClair.png"/>
+<img id="imgCroixOccitaneFonce" alt="140x140" ng-src="../images/croixBleuFonce.png"/>
+<div class="col-lg-10 containerFont" style="margin-left:8%;" id="container">
     <div class="panel panel-default containerProject">
         <div class="panel-body">
             <div class="panel panel-default">
@@ -92,7 +94,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-12 contributeurDataContainer">
+                    <div class="col-lg-12 contributeurDataContainer" ng-if="isOwnProject">
                         <div class="row award">
                             <div class="panel panel-default">
                                 <div class="panel-heading"><b>Information contributeurs</b></div>

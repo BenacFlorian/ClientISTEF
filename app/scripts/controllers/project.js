@@ -47,7 +47,7 @@
                     DataService.getProject(projectId)
                         .then(function (project) {
                             if($scope.typeUser != "Admin"){
-                                if (project.compteProposeurId == UserService.getIdUser()) {
+                                if (project.compteProposeurId == UserService.getIdUser() && $scope.typeUser == "Proposeur") {
                                     $scope.isOwnProject = true;
                                 } else {
                                     $scope.isOwnProject = false;

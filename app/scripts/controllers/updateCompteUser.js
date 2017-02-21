@@ -29,12 +29,14 @@
                                 $scope.email = user.email;
                                 $scope.user = user;
                             });
+                        $scope.isContributeur = true;
                     } else {
                         DataService.getProposeur(userId)
                             .then(function (user) {
                                 $scope.email = user.email;
                                 $scope.user = user;
                             });
+                        $scope.isContributeur = false;
                     }
                 }
 
