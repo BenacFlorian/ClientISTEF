@@ -51,6 +51,11 @@ angular
                     templateUrl: 'views/inscription.html',
                     controller: 'InscriptionCtrl'
                 })
+                .state('inscriptionFace', {
+                    url: '/inscriptionfacebook',
+                    templateUrl: 'views/inscriptionFace.html',
+                    controller: 'InscriptionFaceCtrl'
+                })
                 .state('updateUser', {
                     url: '/updateUser',
                     templateUrl: 'views/updateCompteUser.html',

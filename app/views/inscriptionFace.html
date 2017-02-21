@@ -1,0 +1,81 @@
+<img id="imgCroixOccitaneClair" alt="140x140" ng-src="../images/croixBleuClair.png"/>
+<img id="imgCroixOccitaneFonce" alt="140x140" ng-src="../images/croixBleuFonce.png"/>
+<div class="col-lg-10 containerRemember containerFont" style="margin-left:10%;">
+    <form class="form-horizontal">
+        <fieldset>
+            <div id="legend">
+                <legend class="">Finissez votre inscription {{dataFacebook.name}}!</legend>
+            </div>
+
+            <div class="col-lg-5" style="margin-left: 5%;">
+                <div class="control-group margin">
+                    <label class="control-label labelDataUser" for="username">Nom d'utilisateur</label>
+                    <div class="controls">
+                        <input type="text" id="username" name="username" placeholder="" class="form-control" style="width: 55%;" ng-model="nameUser">
+                    </div>
+                </div>
+                <div class="control-group margin">
+                    <label class="control-label labelDataUser" for="city">Date de naissance</label>
+                    <p class="controls">
+                        <input date-range-picker options="dpkOptions" class="inlineBlock form-control" id="expirationDate" ng-model="dateBirth" style="width:55%">
+                    </p>
+                </div>
+                <div class="control-group margin">
+                    <label class="control-label labelDataUser" for="address">Adresse</label>
+                    <div class="controls">
+                        <input type="text" id="address" name="firstnaddressame" placeholder="" class="form-control" style="width: 55%;" ng-model="address">
+                    </div>
+                </div>
+                <div class="control-group margin">
+                    <label class="control-label labelDataUser" for="zipCode">Code postal</label>
+                    <div class="controls ">
+                        <input type="text" id="zipCode" name="zipCode" placeholder="" class="form-control" style="width: 55%;" ng-model="zipCode">
+                    </div>
+                </div>
+                <div class="control-group margin">
+                    <label class="control-label labelDataUser" for="city">Ville</label>
+                    <div class="controls">
+                        <input type="text" id="city" name="city" placeholder="" class="form-control" style="width: 55%;" ng-model="city">
+                    </div>
+                </div>
+                <div class="control-group margin" ng-show="typeUser == 'Contributeur'">
+                    <label for="" class="control-label labelDataUser">Sélectionnez vos catégories préférées</label>
+                    <div class="controls">
+                        <ui-select multiple id="categories_select" class="form-control" style="width: 55%;" ng-model="dataCategorie.selectedCategories">
+                            <ui-select-match>
+                                {{$item.label}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="item in (dataCategorie.categories | filter: $select.search)">
+                                <span ng-bind="item.label"></span>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="control-group margin">
+                    <!-- E-mail -->
+                    <label class="control-label labelDataUser" for="email">E-mail</label>
+                    <div class="controls">
+                        <input type="text" id="email" name="email" placeholder="" class="form-control" style="width: 40%;" ng-model="email">
+                    </div>
+                </div>
+
+                <div class="control-group margin">
+                    <label class="control-label labelDataUser" for="description">Description</label>
+                    <textarea class="inlineBlock inputAddProject form-control" style="width:100%; resize:vertical; height:30%;" type="text" ng-model="description"></textarea>
+                </div>
+                <div class="control-group margin" data-toggle="buttons" style="margin-top: 5%">
+                    <label class="control-label labelTypeUser" for="typeUser">Type de compte : </label>
+                    <input id="toggle" type="checkbox" data-on="Proposeur" data-off="Contributeur" data-onstyle="warning" data-offstyle="info"/>
+                </div>
+                <div class="control-group margin">
+                    <!-- Button -->
+                    <div class="controls">
+                        <button class="btn btn-success" style="margin-top: 8%;" ng-click="createUser()">S'inscrire</button>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>

@@ -5,6 +5,7 @@
         .factory('UserService', ['$http', '$window', '$q', 'TokenService',
             function ($http, $window, $q, TokenService) {
 
+                var dataFacebook = {};
                 // ---------------------------------------------------------------------------
                 // PUBLIC API.
                 // ---------------------------------------------------------------------------
@@ -16,13 +17,29 @@
                     getIdUser: getIdUser,
                     removeIdUser: removeIdUser,
                     logout: logout,
-                    login: login
+                    login: login, 
+                    setDataFacebook: setDataFacebook, 
+                    getDataFacebook: getDataFacebook,
+                    loginAsFacebook: loginAsFacebook,
+                    removeDataFacebook: removeDataFacebook
                 });
 
 
                 // ---------------------------------------------------------------------------
                 // PUBLIC METHODS.
                 // ---------------------------------------------------------------------------
+                function setDataFacebook(data) {
+                    dataFacebook = data
+                }
+
+                function getDataFacebook() {
+                    return dataFacebook;
+                }
+
+                function removeDataFacebook() {
+                    dataFacebook = {};
+                }
+                
                 function setTypeUser(typeUser) {
                     $window.sessionStorage.typeUser = typeUser;
                 }
@@ -49,6 +66,11 @@
 
                 function login(credentials) {
                     var request = $http.post(apiServer + '/api/CompteUsers/SeConnecter', credentials);
+                    return request.then(handleSuccess, handleError);
+                }
+
+                function loginAsFacebook(credentials) {
+                    var request = $http.post(apiServer + '/api/CompteUsers/seConnecterFacebook', credentials);
                     return request.then(handleSuccess, handleError);
                 }
 

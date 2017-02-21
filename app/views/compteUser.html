@@ -143,9 +143,9 @@
                     <div class="tab-pane" id="contributionUser" style="margin-top:2%" ng-if="showContribution">
                         <div class="row clearfix">
                             <div ng-show="contributions.length == 0">
-                                <h3>Aucune contribution à afficher</h3>
+                                <h3 style="margin:3%;">Aucune contribution à afficher</h3>
                             </div>
-                            <table style="width:100%" class="table-responsive tableContribution" ng-show="contributions.length > 0">
+                            <table style="width:100%; margin-bottom:5%;" class="table-responsive tableContribution" ng-show="contributions.length > 0">
                                 <tr>
                                     <th></th>
                                     <th>Titre</th>
@@ -188,7 +188,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="col-lg-6" ng-show="!hideChart">
+                            <div class="col-lg-6 hideIfSmallScreen" ng-show="!hideChart">
                                 <h3 style="text-align:center">Part de réussite des projets archivés</h3>
                                 <nvd3 options="options" data="data"></nvd3>
                             </div>
@@ -200,7 +200,7 @@
                     <div class="tab-pane" id="historique" style="margin-top:3%" ng-if="isAdmin">
                         <div class="row clearfix">
                             <div ng-show="contributions.length == 0">
-                                <h3>Aucun historique à afficher</h3>
+                                <h3 style="margin:3%;">Aucun historique à afficher</h3>
                             </div>
                             <table style="width:100%" class="table-responsive tableContribution" ng-show="projets.length > 0">
                                 <tr>

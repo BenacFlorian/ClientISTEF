@@ -49,6 +49,7 @@
                             
                             return dateExpiration.isAfter(dateNow) && dateExpirationMisEnAvant.isAfter(dateNow) && !project.estArchive;
                         });
+                    projectsValid = _.shuffle(projectsValid);
                     return projectsValid;
                 }
         }]);

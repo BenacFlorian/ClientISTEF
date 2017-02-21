@@ -10,6 +10,7 @@
                 // ---------------------------------------------------------------------------
                 return ({
                     // real data webservices
+                    existUserFacebook: existUserFacebook,
                     getProject: getProject,
                     getProjectFrontPage: getProjectFrontPage,
                     getStatistique: getStatistique,
@@ -50,7 +51,6 @@
                 // ---------------------------------------------------------------------------
                 // PUBLIC METHODS.
                 // ---------------------------------------------------------------------------
-
                 function updateProject(id, data) {
                     var request = $http.put(apiServer + '/api/Projets/' + id, data);
                     return request.then(handleSuccess, handleError);
@@ -63,6 +63,13 @@
 
                 function getUsers() {
                     var request = $http.post(apiServer + '/api/CompteUsers/getUsers');
+                    return request.then(handleSuccess, handleError);
+                }
+
+                function existUserFacebook(id) {
+                    var request = $http.post(apiServer + '/api/CompteUsers/existCompteFacebook', {
+                        idFacebook : id
+                    });
                     return request.then(handleSuccess, handleError);
                 }
 

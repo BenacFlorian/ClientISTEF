@@ -5,12 +5,12 @@
             Catégories
             </h1>
     <div class="col-lg-12">
-        <div class="categorie img-responsive img" ng-repeat="categorie in categories" style='background-image:url({{categorie.urlPicture}})'>
+        <div class="categorie img-responsive img" ng-repeat="categorie in categories" style='background-image:url({{categorie.urlPicture}})' ng-click="goToCategorieProjets(categorie.id)">
             <div class="col-lg-12">
-                <h2 ng-click="goToCategorieProjets(categorie.id)">{{categorie.label}}</h2>
+                <h2 class="hideIfSmallScreen">{{categorie.label}}</h2>
             </div>
             <div class="col-lg-12">
-                <p>{{categorie.count}} projets</p>
+                <p  class="hideIfSmallScreen">{{categorie.count}} projets</p>
             </div>
         </div>
     </div>

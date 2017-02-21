@@ -22,8 +22,8 @@
 
                 function init() {
                     var userId = UserService.getIdUser();
-                    initCategorieMultipleSelect(userId);
                     if (UserService.getTypeUser() == "Contributeur") {
+                        initCategorieMultipleSelect(userId);
                         DataService.getContributeur(userId)
                             .then(function (user) {
                                 $scope.email = user.email;
@@ -90,17 +90,14 @@
                 }
 
                 function deleteCompteUser() {
-                    debugger;
                     var userId = UserService.getIdUser();
                     if (UserService.getTypeUser() == "Contributeur") {
                         archiveCompte(userId);
                     } else {
                         DataService.getProjectOfUser(userId)
                             .then(function (projects) {
-                                debugger;
                                 return archiveProjects(projects)
                                     .then(function () {
-                                        debugger;
                                         return archiveCompte(userId);
                                     })
                             })
@@ -108,6 +105,7 @@
                                 UserService.logout(UserService.getIdUser())
                                     .then(function () {
                                         TokenService.removeToken();
+                                        $state.go('home');
                                     })
                                 alertify.success("Votre compte a été désactivé");
                             })
