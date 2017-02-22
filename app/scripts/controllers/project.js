@@ -9,7 +9,7 @@
     'use strict';
 
     angular.module('clientApp')
-        .controller('ProjectCtrl', ['$scope', '$state', '$stateParams', 'DataService', 'UserService', 'alertify', '$sce',
+        .controller('ProjectCtrl', ['$scope', '$state', '$stateParams', 'DataService', 'UserService', 'alertify', '$sce', 
       function ($scope, $state, $stateParams, DataService, UserService, alertify, $sce) {
 
                 $scope.init = init;
@@ -137,8 +137,11 @@
                     });
                 }
 
-                function changeImageSelected(urlImg) {
+                function changeImageSelected(urlImg, test) {
+                    debugger;
                     $scope.dataImg.imageSelected = urlImg;
+                    event.preventDefault();
+                    event.stopPropagation();
                 }
           
                 function defineCategorie(){

@@ -62,7 +62,7 @@
                                 <a title="Image 1" href="#"><img class="thumbnail img-responsive" ng-src="{{dataImg.imageSelected}}"></a>
                             </div>
                             <div class="row imgListContainer">
-                                <div class="col-lg-3 col-sm-4 col-xs-6" ng-repeat="image in dataImg.imageList" ng-if="dataImg.imageSelected != image">
+                                <div class="col-lg-3 col-sm-4 col-xs-6" ng-repeat="image in dataImg.imageList">
                                     <a title="Image 1" href="#"><img class="thumbnail img-responsive" ng-src="{{image}}" ng-click="changeImageSelected(image)"></a>
                                 </div>
                             </div>
